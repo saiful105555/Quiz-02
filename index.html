@@ -1,392 +1,495 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>৭ম শ্রেণী টিউটোরিয়াল প্রস্তুতি - গণিত (পরিমাপ)</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'SolaimanLipi', 'Kalpurush', 'Hind Siliguri', sans-serif;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>৭ম শ্রেণী টিউটোরিয়াল প্রস্তুতি - গণিত</title>
+  
+  <!-- Optimized MathJax Configuration for Bangla Context -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      },
+      startup: {
+        pageReady: () => {
+          return MathJax.startup.defaultPageReady().then(() => {
+            console.log('MathJax initial typesetting complete');
+          });
         }
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
 
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px 10px;
-            color: #333;
-        }
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      --bg-gradient: linear-gradient(120deg, #845ec2 0%, #d65db1 50%, #ff6f91 100%);
+      --card-bg: rgba(255, 255, 255, 0.98);
+      --correct: #10b981;
+      --incorrect: #ef4444;
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-        }
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
 
-        /* Header Styling */
-        .header {
-            text-align: center;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-        }
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px 10px;
+      color: #1a202c;
+    }
 
-        .header h1 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
 
-        .header h2 {
-            font-size: 18px;
-            font-weight: normal;
-            margin-bottom: 5px;
-        }
+    /* Header Styling */
+    .header-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 25px 15px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 20px;
+    }
 
-        .header p {
-            font-size: 15px;
-            background: rgba(0,0,0,0.15);
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-top: 5px;
-        }
+    .animated-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, #ff007f, #7928ca, #00dfd8, #ff007f);
+      background-size: 300% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      animation: gradientShift 5s ease infinite;
+      margin-bottom: 8px;
+    }
 
-        /* Timer Sticky Bar */
-        .timer-box {
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-            background: #2d3436;
-            color: #00cec9;
-            text-align: center;
-            padding: 12px;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            border: 2px solid #00cec9;
-        }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        /* Result Section */
-        #result-card {
-            display: none;
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 22px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
+    .sub-info {
+      font-size: 1.05rem;
+      color: #4a5568;
+      margin: 4px 0;
+      font-weight: 600;
+    }
 
-        /* Question Box */
-        .question-card {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
+    .contact-badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      margin-top: 10px;
+      font-weight: bold;
+    }
 
-        .question-title {
-            font-size: 17px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 12px;
-            border-bottom: 2px solid #f1f2f6;
-            padding-bottom: 8px;
-        }
+    /* Timer Box */
+    .timer-box {
+      position: sticky;
+      top: 15px;
+      z-index: 100;
+      background: #1e293b;
+      color: #38bdf8;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      padding: 12px 25px;
+      border-radius: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        /* Options Design */
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+    /* Question Cards */
+    .q-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
 
-        @media(max-width: 600px) {
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    .q-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 18px;
+      line-height: 1.8;
+      direction: ltr;
+      text-align: left;
+    }
 
-        .option-label {
-            display: flex;
-            align-items: center;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            padding: 10px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 15px;
-        }
+    /* Fixing MathJax Alignment Issue */
+    mjx-container {
+      display: inline-block !important;
+      margin: 0 4px !important;
+      vertical-align: middle !important;
+    }
 
-        .option-label:hover {
-            background: #e3faf3;
-            border-color: #20c997;
-        }
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
 
-        .option-label input[type="radio"] {
-            margin-right: 10px;
-            transform: scale(1.2);
-            accent-color: #6c5ce7;
-        }
+    @media (min-width: 600px) {
+      .options-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
 
-        /* Status Colors for Submitted State */
-        .correct-opt {
-            background-color: #d4edda !important;
-            border-color: #28a745 !important;
-            color: #155724;
-            font-weight: bold;
-        }
+    .option-btn {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease-in-out;
+    }
 
-        .wrong-opt {
-            background-color: #f8d7da !important;
-            border-color: #dc3545 !important;
-            color: #721c24;
-        }
+    .option-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
 
-        /* Submit Button */
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-            transition: 0.3s;
-        }
+    .option-btn input {
+      display: none;
+    }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
-        }
+    .opt-prefix {
+      background: #e2e8f0;
+      color: #475569;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
 
-        .already-submitted-msg {
-            color: #d63031;
-            text-align: center;
-            font-size: 16px;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-    </style>
+    .option-btn.selected {
+      background: #e0e7ff;
+      border-color: #6366f1;
+    }
+
+    .option-btn.selected .opt-prefix {
+      background: #6366f1;
+      color: #fff;
+    }
+
+    .option-btn.correct-ans {
+      background: #dcfce7 !important;
+      border-color: var(--correct) !important;
+    }
+    .option-btn.correct-ans .opt-prefix {
+      background: var(--correct) !important;
+      color: #fff;
+    }
+
+    .option-btn.wrong-ans {
+      background: #fee2e2 !important;
+      border-color: var(--incorrect) !important;
+    }
+    .option-btn.wrong-ans .opt-prefix {
+      background: var(--incorrect) !important;
+      color: #fff;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--primary-gradient);
+      color: white;
+      padding: 18px;
+      border: none;
+      border-radius: 35px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+      margin-top: 10px;
+    }
+
+    .result-card {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .score-badge {
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin: 15px 0;
+    }
+
+    .share-btn {
+      background: #25d366;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .already-submitted {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #ef4444;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Title Header -->
-    <div class="header">
-        <h1>৭ম শ্রেণী টিউটোরিয়াল প্রস্তুতি</h1>
-        <h2>বিষয়: গণিত (পরিমাপ)</h2>
-        <p>সার্বিক তত্ত্বাবধানে : সাইফুল ইসলাম | মোবাইল: ০১৬২২১৮৬৮১২</p>
-    </div>
+  
+  <div class="header-card">
+    <div class="animated-title">৭ম শ্রেণী টিউটোরিয়াল প্রস্তুতি</div>
+    <div class="sub-info">বিষয়: গণিত (অধ্যায়: ৬.১ এবং ৬.২)</div>
+    <div class="sub-info">বীজগণিতীয় ভগ্নাংশের যোগ, বিয়োগ ও সরলীকরণ</div>
+    <div class="sub-info">সার্বিক তত্ত্বাবধানে: সাইফুল ইসলাম</div>
+    <div class="contact-badge">📱 মোবাইল / WhatsApp: ০১৬২২১৮৬৮১২</div>
+  </div>
 
-    <!-- Timer Box -->
-    <div class="timer-box" id="timer">অবশিষ্ট সময়: ৩০:০০</div>
+  <div class="timer-box" id="timerContainer">
+    <span>⏱️ অবশিষ্ঠ সময়:</span>
+    <span id="timer">30:00</span>
+  </div>
 
-    <!-- Score Card -->
-    <div id="result-card"></div>
+  <div class="already-submitted" id="alreadySubmittedBlock">
+    ⚠️ আপনি ইতিমধ্যেই এই পরীক্ষাটি সম্পন্ন করেছেন!<br>
+    একবার সাবমিট করার পর পুনরায় পরীক্ষা দেওয়া সম্ভব নয়।
+  </div>
 
-    <!-- Questions Form -->
-    <form id="quizForm">
-        <div id="questions-container"></div>
-        <button type="button" class="submit-btn" id="submitBtn" onclick="submitQuiz()">উত্তর জমা দিন (Submit)</button>
-    </form>
+  <div class="result-card" id="resultCard">
+    <h2>🎉 পরীক্ষা সম্পন্ন হয়েছে!</h2>
+    <div>আপনার প্রাপ্ত নম্বর:</div>
+    <div class="score-badge" id="scoreText">০ / ৩৬</div>
+    <p id="resultFeedback" style="font-size: 1.1rem; color: #4a5568;"></p>
+    <a href="#" class="share-btn" id="whatsappShareBtn" target="_blank">📲 WhatsApp এ ফলাফল শেয়ার করুন</a>
+  </div>
+
+  <form id="quizForm">
+    <div id="questionsWrapper"></div>
+    <button type="button" class="submit-btn" id="submitBtn" onclick="submitQuiz()">উত্তরপত্র সাবমিট করুন</button>
+  </form>
+
 </div>
 
 <script>
-    // MCQ Data with balanced correct answer keys
-    const quizData = [
-        { q: "১. দৈর্ঘ্য পরিমাপের এস.আই (SI) বা আন্তর্জাতিক একক কোনটি?", options: ["সেন্টিমিটার", "মিটার", "কিলোমিটার", "ইঞ্চি"], ans: 1 },
-        { q: "২. ১ কিলোমিটারে কত মিটার?", options: ["১০০ মিটার", "১০,০০০ মিটার", "১০ মিটার", "১০০০ মিটার"], ans: 3 },
-        { q: "৩. ১ মিটারে কত সেন্টিমিটার?", options: ["১০ সেন্টিমিটার", "৫০ সেন্টিমিটার", "১০০০ সেন্টিমিটার", "১০-০ সেন্টিমিটার"], ans: 3 }, // Fixed text
-        { q: "৪. ১ ইঞ্চিতে কত সেন্টিমিটার (প্রায়)?", options: ["১.৫৪ সেন্টিমিটার", "২.৫৪ সেন্টিমিটার", "৩.৫৪ সেন্টিমিটার", "২.০০ সেন্টিমিটার"], ans: 1 },
-        { q: "৫. ১ মাইলে কত গজ?", options: ["১০০০ গজ", "৫২৮০ গজ", "১৭৬০ গজ", "৪৮৪০ গজ"], ans: 2 },
-        { q: "৬. ১ মিটার সমান কত ইঞ্চি (প্রায়)?", options: ["৩৬ ইঞ্চি", "৪০ ইঞ্চি", "৩৭.৩৯ ইঞ্চি", "৩৯.৩৭ ইঞ্চি"], ans: 3 },
-        { q: "৭. ১ মাইলে কত কিলোমিটার (প্রায়)?", options: ["১.৫ কিলোমিটার", "১.৬১ কিলোমিটার", "২.৬১ কিলোমিটার", "১.৮১ কিলোমিটার"], ans: 1 },
-        { q: "৮. ১ গজে কত ফুট?", options: ["২ ফুট", "৪ ফুট", "৩ ফুট", "১২ ফুট"], ans: 2 },
-        { q: "৯. ১ ফুটে কত ইঞ্চি?", options: ["১০ ইঞ্চি", "১৬ ইঞ্চি", "২৪ ইঞ্চি", "১২ ইঞ্চি"], ans: 3 },
-        { q: "১০. ১ একর সমান কত বর্গগজ?", options: ["৪৮৪০ বর্গগজ", "৪০০০ বর্গগজ", "৫০০০ বর্গগজ", "৪৩৫৬ বর্গগজ"], ans: 0 },
-        { q: "১১. ১ হেক্টর সমান কত একর (প্রায়)?", options: ["১.৪৭ একর", "২.৪৭ একর", "৩.৪৭ একর", "২.০০ একর"], ans: 1 },
-        { q: "১২. ১ শতক সমান কত বর্গফুট (প্রায়)?", options: ["৫০-০ বর্গফুট", "৩০০ বর্গফুট", "৪৩৫.৬ বর্গফুট", " ১০০ বর্গফুট"], ans: 2 },
-        { q: "১৩. ১ হেক্টর সমান কত বর্গমিটার?", options: ["১,০০০ বর্গমিটার", "১,০০,০০০ বর্গমিটার", " ৫০০ বর্গমিটার", "১০,০০০ বর্গমিটার"], ans: 3 },
-        { q: "১৪. ক্ষেত্রফল পরিমাপের একক কোনটি?", options: ["মিটার", "ঘনমিটার", "বর্গমিটার", "লিটার"], ans: 2 },
-        { q: "১৫. আয়তন পরিমাপের একক কোনটি?", options: ["ঘনমিটার", "মিটার", "বর্গমিটার", "গ্রাম"], ans: 0 },
-        { q: "১৬. তরল পদার্থের আয়তন মাপার একক কোনটি?", options: ["মিটার", "লিটার", "গ্রাম", "কিলোগ্রাম"], ans: 1 },
-        { q: "১৭. ১ লিটার জলের ওজন কত?", options: ["৫০০ গ্রাম", "২ কিলোগ্রাম", "১ কিলোগ্রাম", "১০০ গ্রাম"], ans: 2 },
-        { q: "১৮. ১ ঘনসেন্টিমিটার বিশুদ্ধ পানির ওজন কত?", options: ["১ মিলিগ্রাম", "১ কিলোগ্রাম", "১০ গ্রাম", "১ গ্রাম"], ans: 3 },
-        { q: "১৯. ১ কিলোগ্রামে কত গ্রাম?", options: ["১০০০ গ্রাম", "১০০ গ্রাম", "১০,০০০ গ্রাম", "৫০০ গ্রাম"], ans: 0 },
-        { q: "২০. ১ কুইন্টালে কত কিলোগ্রাম?", options: ["৫০ কেজি", "১০০ কেজি", "১০০০ কেজি", "৫০০ কেজি"], ans: 1 },
-        { q: "২১. ১ মেট্রিক টনে কত কুইন্টাল?", options: ["৫ কুইন্টাল", "২০ কুইন্টাল", "১০ কুইন্টাল", "১০০ কুইন্টাল"], ans: 2 },
-        { q: "২২. ১ মেট্রিক টনে কত কিলোগ্রাম?", options: ["১০০ কেজি", "৫০০ কেজি", "১০,০০০ কেজি", "১০০০ কেজি"], ans: 3 },
-        { q: "২৩. আয়তক্ষেত্রের ক্ষেত্রফল নির্ণয়ের সূত্র কোনটি?", options: ["দৈর্ঘ্য × প্রস্থ", "দৈর্ঘ্য + প্রস্থ", "২ × (দৈর্ঘ্য + প্রস্থ)", "দৈর্ঘ্য ÷ প্রস্থ"], ans: 0 },
-        { q: "২৪. আয়তক্ষেত্রের পরিসীমা নির্ণয়ের সূত্র কোনটি?", options: ["দৈর্ঘ্য × প্রস্থ", "২ × (দৈর্ঘ্য + প্রস্থ)", "৩ × দৈর্ঘ্য", "দৈর্ঘ্য + প্রস্থ"], ans: 1 },
-        { q: "২৫. বর্গক্ষেত্রের ক্ষেত্রফল নির্ণয়ের সূত্র কোনটি?", options: ["৪ × বাহুর দৈর্ঘ্য", "২ × বাহুর দৈর্ঘ্য", "(বাহুর দৈর্ঘ্য)²", "বাহুর দৈর্ঘ্য ÷ ২"], ans: 2 },
-        { q: "২৬. বর্গক্ষেত্রের পরিসীমা নির্ণয়ের সূত্র কোনটি?", options: ["(বাহুর দৈর্ঘ্য)²", "২ × বাহুর দৈর্ঘ্য", "৩ × বাহুর দৈর্ঘ্য", "৪ × বাহুর দৈর্ঘ্য"], ans: 3 },
-        { q: "২৭. ত্রিভুজের ক্ষেত্রফল নির্ণয়ের সূত্র কোনটি?", options: ["১/২ × ভূমি × উচ্চতা", "ভূমি × উচ্চতা", "২ × ভূমি × উচ্চতা", "ভূমি + উচ্চতা"], ans: 0 },
-        { q: "২৮. সমান্তরিকের ক্ষেত্রফল নির্ণয়ের সূত্র কোনটি?", options: ["১/২ × ভূমি × উচ্চতা", "ভূমি × উচ্চতা", "২ × (দৈর্ঘ্য + প্রস্থ)", "বাহুর দৈর্ঘ্য²"], ans: 1 },
-        { q: "২৯. একটি আয়তাকার বাগানের দৈর্ঘ্য ১০ মিটার এবং প্রস্থ ৫ মিটার হলে, এর ক্ষেত্রফল কত?", options: ["১৫ বর্গমিটার", "৩০ বর্গমিটার", "৫০ বর্গমিটার", "২৫ বর্গমিটার"], ans: 2 },
-        { q: "৩০. একটি বর্গক্ষেত্রের এক বাহুর দৈর্ঘ্য ৪ মিটার হলে, এর পরিসীমা কত?", options: ["৮ মিটার", "১২ মিটার", "২৪ মিটার", "১৬ মিটার"], ans: 3 }
-    ];
+const quizData = [
+  { id: 1, q: "$\\frac{x}{a} + \\frac{y}{b}$ এর মান নিচের কোনটি?", options: ["$\\frac{ab}{bx + ay}$", "$\\frac{1}{ab}$", "$\\frac{bx + ay}{ab}$", "$\\frac{1}{ax + by}$"], ans: 2 },
+  { id: 2, q: "$\\frac{3a}{2x} + \\frac{b}{2y} = $ কত?", options: ["$\\frac{3a + b}{4xy}$", "$\\frac{3ax + by}{2xy}$", "$\\frac{3ay + bx}{4xy}$", "$\\frac{3ay + bx}{2xy}$"], ans: 3 },
+  { id: 3, q: "$\\frac{x}{x + y} + \\frac{y}{x - y}$ এর মান কোনটি?", options: ["$\\frac{x^2 + y^2}{x^2 - y^2}$", "$\\frac{x^2 - y^2}{x^2 + y^2}$", "$1$", "$\\frac{2xy}{x^2 - y^2}$"], ans: 0 },
+  { id: 4, q: "$\\frac{1}{x + 1} + \\frac{1}{x - 2}$ এর সরলীকৃত মান কোনটি?", options: ["$\\frac{2x}{x^2 - x - 2}$", "$\\frac{1}{x^2 - x - 2}$", "$\\frac{x - 1}{x^2 - x - 2}$", "$\\frac{2x - 1}{x^2 - x - 2}$"], ans: 3 },
+  { id: 5, q: "$\\frac{x + y}{x} - \\frac{x - y}{y}$ এর মান কত?", options: ["$\\frac{x^2 + y^2}{xy}$", "$1$", "$\\frac{xy}{x^2 + y^2}$", "$\\frac{y^2}{x^2 + y^2}$"], ans: 0 },
+  { id: 6, q: "$\\frac{a - b - c}{a} + \\frac{a + b + c}{a} = $ কত?", options: ["$-2$", "$1$", "$\\frac{1}{a}$", "$2$"], ans: 3 },
+  { id: 7, q: "$\\frac{1}{a + b} + \\frac{1}{a - b}$ এর মান কত?", options: ["$\\frac{2}{a^2 - b^2}$", "$\\frac{1}{a^2 - b^2}$", "$\\frac{2a}{a^2 - b^2}$", "$\\frac{ab}{a^2 - b^2}$"], ans: 2 },
+  { id: 8, q: "$\\frac{a}{a + b} + \\frac{b}{a + b} = $ কত?", options: ["$\\frac{2}{a + b}$", "$\\frac{1}{a + b}$", "$1$", "$a + b$"], ans: 2 },
+  { id: 9, q: "$\\frac{a}{a - 3} + \\frac{3}{3 - a} = $ কত?", options: ["$\\frac{a + 3}{a - 3}$", "$\\frac{a + 3}{3 - a}$", "$1$", "$0$"], ans: 2 },
+  { id: 10, q: "$\\frac{5}{abc} - \\frac{3c}{ab} = $ কত?", options: ["$\\frac{5 - 3c^2}{abc}$", "$\\frac{5abc - 3c}{abc}$", "$\\frac{15abc - 15c^2}{abc}$", "$\\frac{5a^2b^2c^2 - 3a^2b^2c}{abc}$"], ans: 0 },
+  { id: 11, q: "$\\frac{a^2}{b} - \\frac{b^2}{a}$ এর মান নিচের কোনটি?", options: ["$\\frac{ab}{a^3 - b^3}$", "$1$", "$\\frac{a^3 - b^3}{ab}$", "$\\frac{a^2 - b^2}{ab}$"], ans: 2 },
+  { id: 12, q: "$\\frac{12a}{5} - \\frac{a}{5} = $ কত?", options: ["$\\frac{12a^2}{5}$", "$\\frac{13a}{5}$", "$\\frac{13a^2}{5}$", "$\\frac{11a}{5}$"], ans: 3 },
+  { id: 13, q: "$\\frac{3}{a + 3} - \\frac{2}{a + 2}$ এর বিয়োগফল কত?", options: ["$\\frac{a}{a^2 + 5a + 6}$", "$\\frac{a}{a^2 + 5a}$", "$\\frac{1}{a^2 + 5a + 6}$", "$\\frac{1}{a - 3}$"], ans: 0 },
+  { id: 14, q: "$\\frac{1}{x + 1} - \\frac{1}{1 - x} = $ কত?", options: ["$0$", "$\\frac{-2x}{x^2 - 1}$", "$\\frac{2}{x^2 - 1}$", "$\\frac{2x}{x^2 - 1}$"], ans: 3 },
+  { id: 15, q: "$\\frac{1}{x + 3} - \\frac{1}{x^2 - 9} = $ কত?", options: ["$\\frac{x - 4}{x^2 - 9}$", "$\\frac{x - 2}{x^2 - 9}$", "$\\frac{x + 2}{x^2 - 9}$", "$\\frac{x + 4}{x^2 - 9}$"], ans: 0 },
+  { id: 16, q: "$\\frac{x}{y}$ থেকে $\\frac{y}{x}$ বিয়োগ করলে বিয়োগফল কত হবে?", options: ["$\\frac{x^2 + y^2}{xy}$", "$\\frac{x^2 - y^2}{xy}$", "$x^2 + y^2$", "$x^2 - y^2$"], ans: 1 },
+  { id: 17, q: "$\\frac{2x}{2x - 4}$ ভগ্নাংশটি থেকে $1$ বিয়োগ করলে বিয়োগফল কোনটি?", options: ["$\\frac{2}{x - 2}$", "$\\frac{1}{x - 2}$", "$\\frac{4}{2x - 4}$", "$\\frac{2x + 4}{2x - 4}$"], ans: 1 },
+  { id: 18, q: "$1 - \\frac{y}{x} = $ কত?", options: ["$\\frac{y + x}{x}$", "$\\frac{y + x}{y}$", "$\\frac{x - y}{x}$", "$\\frac{x - y}{y}$"], ans: 2 },
+  { id: 19, q: "$\\frac{x + a}{x - a}$ থেকে $\\frac{4ax}{x^2 - a^2}$ বিয়োগ করলে বিয়োগফল কত?", options: ["$\\frac{x - a}{x + a}$", "$\\frac{-x - a}{x - a}$", "$\\frac{-x + a}{x - a}$", "$\\frac{-x - a}{x + a}$"], ans: 0 },
+  { id: 20, q: "$\\frac{1}{a + 2} - \\frac{1}{a^2 - 4} = $ কত?", options: ["$\\frac{1}{a + 2}$", "$\\frac{a - 3}{a^2 - 4}$", "$\\frac{a + 3}{a^2 - 4}$", "$\\frac{a - 3}{a - 3}$"], ans: 1 },
+  { id: 21, q: "$\\frac{4}{p^2} - \\frac{3}{p} = $ কত?", options: ["$\\frac{1}{p^2}$", "$\\frac{12}{p^3}$", "$\\frac{4 - 3p}{p^2}$", "$\\frac{4p - 3}{p^2}$"], ans: 2 },
+  { id: 22, q: "$\\frac{m + n}{n} - \\frac{m - n}{m} = $ কত?", options: ["$\\frac{mn}{m^2 + n^2}$", "$\\frac{1}{m^2 + n^2}$", "$\\frac{m^2 + n^2}{mn}$", "$\\frac{n}{m^2 + n^2}$"], ans: 2 },
+  { id: 23, q: "$\\frac{a}{a + b} - \\frac{b}{a + b} = $ কত?", options: ["$0$", "$1$", "$\\frac{ab}{a + b}$", "$\\frac{a - b}{a + b}$"], ans: 3 },
+  { id: 24, q: "$\\frac{a}{a - 3} - 1 = $ কত?", options: ["$\\frac{-4}{2(a - 3)}$", "$\\frac{a - 2}{a - 3}$", "$\\frac{3}{a - 3}$", "$\\frac{2}{a - 3}$"], ans: 2 },
+  { id: 25, q: "$\\frac{b}{a}$ থেকে $\\frac{a}{b}$ কত বেশি?", options: ["$\\frac{ab}{a^2 + b^2}$", "$\\frac{a^2 - b^2}{ab}$", "$a^2 + b^2$", "$1$"], ans: 1 },
+  { id: 26, q: "$\\frac{1}{2a}$ এর সাথে কত যোগ করলে যোগফল $2a$ হবে?", options: ["$\\frac{4a^2 + 1}{2a}$", "$\\frac{4a^2 - 1}{2a}$", "$\\frac{4a^2 - a}{2a}$", "$\\frac{a^2 + 2}{2a}$"], ans: 1 },
+  { id: 27, q: "প্রক্রিয়া চিহ্ন দ্বারা সংযুক্ত দুই বা ততোধিক বীজগণিতীয় ভগ্নাংশকে একটি ভগ্নাংশে বা রাশিতে পরিণত করাই হলো ভগ্নাংশের —", options: ["গুণ", "গুণক", "সরলীকরণ", "ভাজক"], ans: 2 },
+  { id: 28, q: "$\\frac{x - y}{xy} + \\frac{y - z}{yz} + \\frac{z - x}{xz}$ এর মান কোনটি?", options: ["$0$", "$1$", "$\\frac{1}{xyz}$", "$\\frac{x + y + z}{xyz}$"], ans: 0 },
+  { id: 29, q: "$\\frac{y - z}{yz} + \\frac{z - x}{zx} + \\frac{x - y}{xy}$ এর মান কোনটি?", options: ["$0$", "$1$", "$\\frac{1}{xyz}$", "$\\frac{xy + yz + zx}{xyz}$"], ans: 0 },
+  { id: 30, q: "$\\left(\\frac{a}{b} - \\frac{4a}{3b} + \\frac{a}{2b}\\right)$ সমান কোনটি?", options: ["$\\frac{a}{b}$", "$\\frac{a}{6b}$", "$\\frac{a}{3b}$", "$\\frac{a}{4b}$"], ans: 1 },
+  { id: 31, q: "$\\frac{x^2 + y^2}{xyz} - \\frac{y}{zx} - \\frac{x}{xy}$ এর সরলীকৃত মান কোনটি?", options: ["$0$", "$\\frac{2x^2 + 2y^2}{xyz}$", "$1$", "$\\frac{x^2 + y^2 + z^2}{xyz}$"], ans: 0 },
+  { id: 32, q: "$x, x^2 + 1$ তিনটি বীজগণিতীয় রাশি হলে—<br>i. $\\frac{x}{x + 1} + \\frac{1}{x + 1} = 1$<br>ii. $\\frac{x + 1}{x} - \\frac{1}{x} = x$<br>iii. $\\frac{x}{x + 1} + \\frac{x^2}{x + 1} = x$<br><b>উপরের তথ্যের আলোকে নিচের কোনটি সঠিক?</b>", options: ["i", "i ও iii", "ii ও iii", "i, ii ও iii"], ans: 1 },
+  { id: 33, q: "নিচের তথ্যগুলো লক্ষ করো :<br>i. $\\frac{x}{y}, \\frac{y}{x}$ এর বিয়োগফল $\\frac{x^2 - y^2}{xy}$<br>ii. $\\frac{a}{bc}, \\frac{b}{ca}, \\frac{c}{ab}$ ভগ্নাংশগুলোর হরগুলোর ল.সা.গু. $abc$<br>iii. $\\frac{x^2 + 2}{x + 2}$ একটি বীজগণিতীয় ভগ্নাংশ<br><b>উপরের তথ্যের আলোকে নিচের কোনটি সঠিক?</b>", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], ans: 3 },
+  { id: 34, q: "$\\frac{a}{a + b}, \\frac{b}{a - b}$ ভগ্নাংশ দুটির—<br>i. যোগফল $\\frac{a^2 + b^2}{a^2 - b^2}$<br>ii. বিয়োগফল $1$<br>iii. হরগুলোর ল.সা.গু. $a^2 - b^2$<br><b>উপরের তথ্যের ভিত্তিতে নিচের কোনটি সঠিক?</b>", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], ans: 1 },
+  { id: 35, q: "$\\frac{x + y}{xy}$ ও $\\frac{y + z}{yz}$ দুটি বীজগণিতীয় ভগ্নাংশ হলে—<br>i. হরদ্বয়ের ল.সা.গু. $xyz$<br>ii. ভগ্নাংশদ্বয়ের বিয়োগফল $\\frac{x - y}{zx}$<br>iii. ভগ্নাংশদ্বয়ের যোগফল $\\frac{xy + yz + 2zx}{xyz}$<br><b>নিচের কোনটি সঠিক?</b>", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], ans: 1 },
+  { id: 36, q: "$\\frac{x}{xy}$ এবং $\\frac{y}{xyz}$ ভগ্নাংশদ্বয়—<br>i. সমতুল ভগ্নাংশ<br>ii. এর পার্থক্য $\\frac{x - y}{xyz}$<br>iii. যোগফল $\\frac{x + y}{xyz}$<br><b>নিচের কোনটি সঠিক?</b>", options: ["i ও ii", "i ও iii", "ii ও iii", "i, ii ও iii"], ans: 2 }
+];
 
-    const optPrefix = ["(ক)", "(খ)", "(গ)", "(ঘ)"];
-    let timerInterval;
-    let totalSeconds = 30 * 60; // 30 minutes
+const optionLabels = ["(ক)", "(খ)", "(গ)", "(ঘ)"];
+let timeLeft = 30 * 60;
+let timerInterval;
 
-    // Render Quiz Questions
-    function renderQuiz() {
-        const container = document.getElementById("questions-container");
-        container.innerHTML = "";
+function renderQuiz() {
+  const container = document.getElementById("questionsWrapper");
+  container.innerHTML = "";
 
-        quizData.forEach((data, index) => {
-            let optionsHTML = "";
-            data.options.forEach((opt, optIdx) => {
-                optionsHTML += `
-                    <label class="option-label" id="label-q${index}-opt${optIdx}">
-                        <input type="radio" name="q${index}" value="${optIdx}">
-                        ${optPrefix[optIdx]} ${opt}
-                    </label>
-                `;
-            });
+  quizData.forEach((item, index) => {
+    const qCard = document.createElement("div");
+    qCard.className = "q-card";
+    qCard.id = `q-card-${index}`;
 
-            const card = document.createElement("div");
-            card.className = "question-card";
-            card.innerHTML = `
-                <div class="question-title">${data.q}</div>
-                <div class="options-grid">${optionsHTML}</div>
-            `;
-            container.appendChild(card);
-        });
+    let optionsHTML = "";
+    item.options.forEach((opt, optIdx) => {
+      optionsHTML += `
+        <label class="option-btn" onclick="selectOption(${index}, ${optIdx})">
+          <input type="radio" name="q${index}" value="${optIdx}">
+          <span class="opt-prefix">${optionLabels[optIdx]}</span>
+          <span>${opt}</span>
+        </label>
+      `;
+    });
+
+    qCard.innerHTML = `
+      <div class="q-title">${index + 1}. ${item.q}</div>
+      <div class="options-grid">${optionsHTML}</div>
+    `;
+    container.appendChild(qCard);
+  });
+
+  // Re-trigger MathJax typesetting after DOM insert
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    MathJax.typesetPromise();
+  }
+}
+
+function selectOption(qIdx, optIdx) {
+  if(localStorage.getItem("mathQuizSubmitted")) return;
+
+  const card = document.getElementById(`q-card-${qIdx}`);
+  const btns = card.querySelectorAll(".option-btn");
+  
+  btns.forEach((btn, i) => {
+    if (i === optIdx) {
+      btn.classList.add("selected");
+      btn.querySelector("input").checked = true;
+    } else {
+      btn.classList.remove("selected");
     }
+  });
+}
 
-    // Start Timer
-    function startTimer() {
-        const timerDisplay = document.getElementById("timer");
-        timerInterval = setInterval(() => {
-            let minutes = Math.floor(totalSeconds / 60);
-            let seconds = totalSeconds % 60;
+function startTimer() {
+  timerInterval = setInterval(() => {
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
 
-            minutes = minutes < 10 ? '০' + convertToBangla(minutes) : convertToBangla(minutes);
-            seconds = seconds < 10 ? '০' + convertToBangla(seconds) : convertToBangla(seconds);
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
 
-            timerDisplay.innerHTML = `অবশিষ্ট সময়: ${minutes}:${seconds}`;
+    document.getElementById("timer").innerText = `${minutes}:${seconds}`;
 
-            if (totalSeconds <= 0) {
-                clearInterval(timerInterval);
-                alert("আপনার ৩০ মিনিট সময় শেষ হয়ে গেছে! পরীক্ষাটি স্বয়ংক্রিয়ভাবে জমা হয়ে যাচ্ছে।");
-                submitQuiz(true);
-            }
-            totalSeconds--;
-        }, 1000);
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      alert("সময় শেষ! আপনার পরীক্ষা স্বয়ংক্রিয়ভাবে সাবমিট করা হচ্ছে।");
+      submitQuiz();
     }
+    timeLeft--;
+  }, 1000);
+}
 
-    function convertToBangla(num) {
-        const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-        return num.toString().split('').map(d => banglaDigits[d] || d).join('');
+function submitQuiz() {
+  if (localStorage.getItem("mathQuizSubmitted")) return;
+
+  clearInterval(timerInterval);
+  let score = 0;
+
+  quizData.forEach((item, index) => {
+    const card = document.getElementById(`q-card-${index}`);
+    const selectedInput = card.querySelector(`input[name="q${index}"]:checked`);
+    const btns = card.querySelectorAll(".option-btn");
+
+    if (selectedInput) {
+      const userAns = parseInt(selectedInput.value);
+      if (userAns === item.ans) {
+        score++;
+        btns[userAns].classList.add("correct-ans");
+      } else {
+        btns[userAns].classList.add("wrong-ans");
+        btns[item.ans].classList.add("correct-ans");
+      }
+    } else {
+      btns[item.ans].classList.add("correct-ans");
     }
+  });
 
-    // Submit Quiz Function
-    function submitQuiz(isAuto = false) {
-        clearInterval(timerInterval);
+  localStorage.setItem("mathQuizSubmitted", "true");
+  localStorage.setItem("mathQuizScore", score);
 
-        let score = 0;
-        let userAnswers = [];
+  showResult(score);
+}
 
-        quizData.forEach((data, index) => {
-            const selectedOpt = document.querySelector(`input[name="q${index}"]:checked`);
-            let userAns = selectedOpt ? parseInt(selectedOpt.value) : -1;
-            userAnswers.push(userAns);
+function showResult(score) {
+  document.getElementById("timerContainer").style.display = "none";
+  document.getElementById("submitBtn").style.display = "none";
 
-            if (userAns === data.ans) {
-                score++;
-            }
-        });
+  const resultCard = document.getElementById("resultCard");
+  resultCard.style.display = "block";
+  document.getElementById("scoreText").innerText = `${score} / ${quizData.length}`;
 
-        // Save status in LocalStorage so student cannot re-take test
-        const quizResult = {
-            submitted: true,
-            score: score,
-            userAnswers: userAnswers
-        };
-        localStorage.setItem("math_quiz_7_result", JSON.stringify(quizResult));
+  const percentage = (score / quizData.length) * 100;
+  let feedback = "";
+  if (percentage >= 80) feedback = "অসাধারণ প্রস্তুতি! তোমার অর্জন প্রশংসনীয়। 🌟";
+  else if (percentage >= 50) feedback = "ভালো হয়েছে! আরেকটু প্রস্তুতি নিলে আরও ভালো করবে। 👍";
+  else feedback = "আরও বেশি অনুশীলনের প্রয়োজন। নিয়মিত প্র্যাকটিস করো। 📚";
 
-        showResults(score, userAnswers);
-    }
+  document.getElementById("resultFeedback").innerText = feedback;
 
-    // Display Results and Highlight Correct/Wrong Options
-    function showResults(score, userAnswers) {
-        // Hide Submit Button and Timer
-        document.getElementById("submitBtn").style.display = "none";
-        document.getElementById("timer").style.display = "none";
+  const shareMsg = encodeURIComponent(`আমি "৭ম শ্রেণী টিউটোরিয়াল প্রস্তুতি - গণিত" পরীক্ষায় ৩৬ এর মধ্যে ${score} পেয়েছি। সার্বিক তত্ত্বাবধানে: সাইফুল ইসলাম।`);
+  document.getElementById("whatsappShareBtn").href = `https://api.whatsapp.com/send?phone=8801622186812&text=${shareMsg}`;
 
-        // Show Score Card
-        const resultCard = document.getElementById("result-card");
-        resultCard.style.display = "block";
-        resultCard.innerHTML = `পরীক্ষা সমাপ্ত!<br>আপনার প্রাপ্ত নম্বর: ${convertToBangla(score)} / ${convertToBangla(quizData.length)}`;
+  resultCard.scrollIntoView({ behavior: 'smooth' });
+}
 
-        // Disable all radio inputs and color code options
-        quizData.forEach((data, index) => {
-            const userAns = userAnswers[index];
-            const correctAns = data.ans;
-
-            data.options.forEach((_, optIdx) => {
-                const label = document.getElementById(`label-q${index}-opt${optIdx}`);
-                const input = label.querySelector('input');
-                input.disabled = true;
-
-                if (optIdx === correctAns) {
-                    label.classList.add("correct-opt");
-                }
-                if (userAns === optIdx && userAns !== correctAns) {
-                    label.classList.add("wrong-opt");
-                }
-            });
-        });
-
-        // Message at bottom
-        const msg = document.createElement("p");
-        msg.className = "already-submitted-msg";
-        msg.innerText = "আপনি ইতিপূর্বে পরীক্ষাটি সম্পন্ন করেছেন। পুনরায় অংশগ্রহণ করা যাবে না।";
-        document.getElementById("quizForm").appendChild(msg);
-    }
-
-    // On Page Load Check
-    window.onload = function() {
-        renderQuiz();
-        const savedResult = localStorage.getItem("math_quiz_7_result");
-        if (savedResult) {
-            const resultData = JSON.parse(savedResult);
-            // Pre-select user choices
-            resultData.userAnswers.forEach((ans, index) => {
-                if (ans !== -1) {
-                    const radio = document.querySelector(`input[name="q${index}"][value="${ans}"]`);
-                    if (radio) radio.checked = true;
-                }
-            });
-            showResults(resultData.score, resultData.userAnswers);
-        } else {
-            startTimer();
-        }
-    };
+window.onload = function() {
+  if (localStorage.getItem("mathQuizSubmitted")) {
+    document.getElementById("quizForm").style.display = "none";
+    document.getElementById("timerContainer").style.display = "none";
+    document.getElementById("alreadySubmittedBlock").style.display = "block";
+    const savedScore = localStorage.getItem("mathQuizScore") || 0;
+    showResult(savedScore);
+  } else {
+    renderQuiz();
+    startTimer();
+  }
+};
 </script>
 
 </body>
