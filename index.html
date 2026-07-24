@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>৭ম শ্রেণী টিউটোরিয়াল প্রস্তুতি - গণিত (পরিমাপ)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'SolaimanLipi', 'Kalpurush', 'Hind Siliguri', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 10px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+
+        /* Header Styling */
+        .header {
+            text-align: center;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 15px;
+            background: rgba(0,0,0,0.15);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 5px;
+        }
+
+        /* Timer Sticky Bar */
+        .timer-box {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: #2d3436;
+            color: #00cec9;
+            text-align: center;
+            padding: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid #00cec9;
+        }
+
+        /* Result Section */
+        #result-card {
+            display: none;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Question Box */
+        .question-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .question-title {
+            font-size: 17px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #f1f2f6;
+            padding-bottom: 8px;
+        }
+
+        /* Options Design */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media(max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+        }
+
+        .option-label:hover {
+            background: #e3faf3;
+            border-color: #20c997;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            accent-color: #6c5ce7;
+        }
+
+        /* Status Colors for Submitted State */
+        .correct-opt {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .wrong-opt {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .already-submitted-msg {
+            color: #d63031;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Title Header -->
+    <div class="header">
+        <h1>৭ম শ্রেণী টিউটোরিয়াল প্রস্তুতি</h1>
+        <h2>বিষয়: গণিত (পরিমাপ)</h2>
+        <p>সার্বিক তত্ত্বাবধানে : সাইফুল ইসলাম | মোবাইল: ০১৬২২১৮৬৮১২</p>
+    </div>
+
+    <!-- Timer Box -->
+    <div class="timer-box" id="timer">অবশিষ্ট সময়: ৩০:০০</div>
+
+    <!-- Score Card -->
+    <div id="result-card"></div>
+
+    <!-- Questions Form -->
+    <form id="quizForm">
+        <div id="questions-container"></div>
+        <button type="button" class="submit-btn" id="submitBtn" onclick="submitQuiz()">উত্তর জমা দিন (Submit)</button>
+    </form>
+</div>
+
+<script>
+    // MCQ Data with balanced correct answer keys
+    const quizData = [
+        { q: "১. দৈর্ঘ্য পরিমাপের এস.আই (SI) বা আন্তর্জাতিক একক কোনটি?", options: ["সেন্টিমিটার", "মিটার", "কিলোমিটার", "ইঞ্চি"], ans: 1 },
+        { q: "২. ১ কিলোমিটারে কত মিটার?", options: ["১০০ মিটার", "১০,০০০ মিটার", "১০ মিটার", "১০০০ মিটার"], ans: 3 },
+        { q: "৩. ১ মিটারে কত সেন্টিমিটার?", options: ["১০ সেন্টিমিটার", "৫০ সেন্টিমিটার", "১০০০ সেন্টিমিটার", "১০-০ সেন্টিমিটার"], ans: 3 }, // Fixed text
+        { q: "৪. ১ ইঞ্চিতে কত সেন্টিমিটার (প্রায়)?", options: ["১.৫৪ সেন্টিমিটার", "২.৫৪ সেন্টিমিটার", "৩.৫৪ সেন্টিমিটার", "২.০০ সেন্টিমিটার"], ans: 1 },
+        { q: "৫. ১ মাইলে কত গজ?", options: ["১০০০ গজ", "৫২৮০ গজ", "১৭৬০ গজ", "৪৮৪০ গজ"], ans: 2 },
+        { q: "৬. ১ মিটার সমান কত ইঞ্চি (প্রায়)?", options: ["৩৬ ইঞ্চি", "৪০ ইঞ্চি", "৩৭.৩৯ ইঞ্চি", "৩৯.৩৭ ইঞ্চি"], ans: 3 },
+        { q: "৭. ১ মাইলে কত কিলোমিটার (প্রায়)?", options: ["১.৫ কিলোমিটার", "১.৬১ কিলোমিটার", "২.৬১ কিলোমিটার", "১.৮১ কিলোমিটার"], ans: 1 },
+        { q: "৮. ১ গজে কত ফুট?", options: ["২ ফুট", "৪ ফুট", "৩ ফুট", "১২ ফুট"], ans: 2 },
+        { q: "৯. ১ ফুটে কত ইঞ্চি?", options: ["১০ ইঞ্চি", "১৬ ইঞ্চি", "২৪ ইঞ্চি", "১২ ইঞ্চি"], ans: 3 },
+        { q: "১০. ১ একর সমান কত বর্গগজ?", options: ["৪৮৪০ বর্গগজ", "৪০০০ বর্গগজ", "৫০০০ বর্গগজ", "৪৩৫৬ বর্গগজ"], ans: 0 },
+        { q: "১১. ১ হেক্টর সমান কত একর (প্রায়)?", options: ["১.৪৭ একর", "২.৪৭ একর", "৩.৪৭ একর", "২.০০ একর"], ans: 1 },
+        { q: "১২. ১ শতক সমান কত বর্গফুট (প্রায়)?", options: ["৫০-০ বর্গফুট", "৩০০ বর্গফুট", "৪৩৫.৬ বর্গফুট", " ১০০ বর্গফুট"], ans: 2 },
+        { q: "১৩. ১ হেক্টর সমান কত বর্গমিটার?", options: ["১,০০০ বর্গমিটার", "১,০০,০০০ বর্গমিটার", " ৫০০ বর্গমিটার", "১০,০০০ বর্গমিটার"], ans: 3 },
+        { q: "১৪. ক্ষেত্রফল পরিমাপের একক কোনটি?", options: ["মিটার", "ঘনমিটার", "বর্গমিটার", "লিটার"], ans: 2 },
+        { q: "১৫. আয়তন পরিমাপের একক কোনটি?", options: ["ঘনমিটার", "মিটার", "বর্গমিটার", "গ্রাম"], ans: 0 },
+        { q: "১৬. তরল পদার্থের আয়তন মাপার একক কোনটি?", options: ["মিটার", "লিটার", "গ্রাম", "কিলোগ্রাম"], ans: 1 },
+        { q: "১৭. ১ লিটার জলের ওজন কত?", options: ["৫০০ গ্রাম", "২ কিলোগ্রাম", "১ কিলোগ্রাম", "১০০ গ্রাম"], ans: 2 },
+        { q: "১৮. ১ ঘনসেন্টিমিটার বিশুদ্ধ পানির ওজন কত?", options: ["১ মিলিগ্রাম", "১ কিলোগ্রাম", "১০ গ্রাম", "১ গ্রাম"], ans: 3 },
+        { q: "১৯. ১ কিলোগ্রামে কত গ্রাম?", options: ["১০০০ গ্রাম", "১০০ গ্রাম", "১০,০০০ গ্রাম", "৫০০ গ্রাম"], ans: 0 },
+        { q: "২০. ১ কুইন্টালে কত কিলোগ্রাম?", options: ["৫০ কেজি", "১০০ কেজি", "১০০০ কেজি", "৫০০ কেজি"], ans: 1 },
+        { q: "২১. ১ মেট্রিক টনে কত কুইন্টাল?", options: ["৫ কুইন্টাল", "২০ কুইন্টাল", "১০ কুইন্টাল", "১০০ কুইন্টাল"], ans: 2 },
+        { q: "২২. ১ মেট্রিক টনে কত কিলোগ্রাম?", options: ["১০০ কেজি", "৫০০ কেজি", "১০,০০০ কেজি", "১০০০ কেজি"], ans: 3 },
+        { q: "২৩. আয়তক্ষেত্রের ক্ষেত্রফল নির্ণয়ের সূত্র কোনটি?", options: ["দৈর্ঘ্য × প্রস্থ", "দৈর্ঘ্য + প্রস্থ", "২ × (দৈর্ঘ্য + প্রস্থ)", "দৈর্ঘ্য ÷ প্রস্থ"], ans: 0 },
+        { q: "২৪. আয়তক্ষেত্রের পরিসীমা নির্ণয়ের সূত্র কোনটি?", options: ["দৈর্ঘ্য × প্রস্থ", "২ × (দৈর্ঘ্য + প্রস্থ)", "৩ × দৈর্ঘ্য", "দৈর্ঘ্য + প্রস্থ"], ans: 1 },
+        { q: "২৫. বর্গক্ষেত্রের ক্ষেত্রফল নির্ণয়ের সূত্র কোনটি?", options: ["৪ × বাহুর দৈর্ঘ্য", "২ × বাহুর দৈর্ঘ্য", "(বাহুর দৈর্ঘ্য)²", "বাহুর দৈর্ঘ্য ÷ ২"], ans: 2 },
+        { q: "২৬. বর্গক্ষেত্রের পরিসীমা নির্ণয়ের সূত্র কোনটি?", options: ["(বাহুর দৈর্ঘ্য)²", "২ × বাহুর দৈর্ঘ্য", "৩ × বাহুর দৈর্ঘ্য", "৪ × বাহুর দৈর্ঘ্য"], ans: 3 },
+        { q: "২৭. ত্রিভুজের ক্ষেত্রফল নির্ণয়ের সূত্র কোনটি?", options: ["১/২ × ভূমি × উচ্চতা", "ভূমি × উচ্চতা", "২ × ভূমি × উচ্চতা", "ভূমি + উচ্চতা"], ans: 0 },
+        { q: "২৮. সমান্তরিকের ক্ষেত্রফল নির্ণয়ের সূত্র কোনটি?", options: ["১/২ × ভূমি × উচ্চতা", "ভূমি × উচ্চতা", "২ × (দৈর্ঘ্য + প্রস্থ)", "বাহুর দৈর্ঘ্য²"], ans: 1 },
+        { q: "২৯. একটি আয়তাকার বাগানের দৈর্ঘ্য ১০ মিটার এবং প্রস্থ ৫ মিটার হলে, এর ক্ষেত্রফল কত?", options: ["১৫ বর্গমিটার", "৩০ বর্গমিটার", "৫০ বর্গমিটার", "২৫ বর্গমিটার"], ans: 2 },
+        { q: "৩০. একটি বর্গক্ষেত্রের এক বাহুর দৈর্ঘ্য ৪ মিটার হলে, এর পরিসীমা কত?", options: ["৮ মিটার", "১২ মিটার", "২৪ মিটার", "১৬ মিটার"], ans: 3 }
+    ];
+
+    const optPrefix = ["(ক)", "(খ)", "(গ)", "(ঘ)"];
+    let timerInterval;
+    let totalSeconds = 30 * 60; // 30 minutes
+
+    // Render Quiz Questions
+    function renderQuiz() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+
+        quizData.forEach((data, index) => {
+            let optionsHTML = "";
+            data.options.forEach((opt, optIdx) => {
+                optionsHTML += `
+                    <label class="option-label" id="label-q${index}-opt${optIdx}">
+                        <input type="radio" name="q${index}" value="${optIdx}">
+                        ${optPrefix[optIdx]} ${opt}
+                    </label>
+                `;
+            });
+
+            const card = document.createElement("div");
+            card.className = "question-card";
+            card.innerHTML = `
+                <div class="question-title">${data.q}</div>
+                <div class="options-grid">${optionsHTML}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // Start Timer
+    function startTimer() {
+        const timerDisplay = document.getElementById("timer");
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(totalSeconds / 60);
+            let seconds = totalSeconds % 60;
+
+            minutes = minutes < 10 ? '০' + convertToBangla(minutes) : convertToBangla(minutes);
+            seconds = seconds < 10 ? '০' + convertToBangla(seconds) : convertToBangla(seconds);
+
+            timerDisplay.innerHTML = `অবশিষ্ট সময়: ${minutes}:${seconds}`;
+
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                alert("আপনার ৩০ মিনিট সময় শেষ হয়ে গেছে! পরীক্ষাটি স্বয়ংক্রিয়ভাবে জমা হয়ে যাচ্ছে।");
+                submitQuiz(true);
+            }
+            totalSeconds--;
+        }, 1000);
+    }
+
+    function convertToBangla(num) {
+        const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+        return num.toString().split('').map(d => banglaDigits[d] || d).join('');
+    }
+
+    // Submit Quiz Function
+    function submitQuiz(isAuto = false) {
+        clearInterval(timerInterval);
+
+        let score = 0;
+        let userAnswers = [];
+
+        quizData.forEach((data, index) => {
+            const selectedOpt = document.querySelector(`input[name="q${index}"]:checked`);
+            let userAns = selectedOpt ? parseInt(selectedOpt.value) : -1;
+            userAnswers.push(userAns);
+
+            if (userAns === data.ans) {
+                score++;
+            }
+        });
+
+        // Save status in LocalStorage so student cannot re-take test
+        const quizResult = {
+            submitted: true,
+            score: score,
+            userAnswers: userAnswers
+        };
+        localStorage.setItem("math_quiz_7_result", JSON.stringify(quizResult));
+
+        showResults(score, userAnswers);
+    }
+
+    // Display Results and Highlight Correct/Wrong Options
+    function showResults(score, userAnswers) {
+        // Hide Submit Button and Timer
+        document.getElementById("submitBtn").style.display = "none";
+        document.getElementById("timer").style.display = "none";
+
+        // Show Score Card
+        const resultCard = document.getElementById("result-card");
+        resultCard.style.display = "block";
+        resultCard.innerHTML = `পরীক্ষা সমাপ্ত!<br>আপনার প্রাপ্ত নম্বর: ${convertToBangla(score)} / ${convertToBangla(quizData.length)}`;
+
+        // Disable all radio inputs and color code options
+        quizData.forEach((data, index) => {
+            const userAns = userAnswers[index];
+            const correctAns = data.ans;
+
+            data.options.forEach((_, optIdx) => {
+                const label = document.getElementById(`label-q${index}-opt${optIdx}`);
+                const input = label.querySelector('input');
+                input.disabled = true;
+
+                if (optIdx === correctAns) {
+                    label.classList.add("correct-opt");
+                }
+                if (userAns === optIdx && userAns !== correctAns) {
+                    label.classList.add("wrong-opt");
+                }
+            });
+        });
+
+        // Message at bottom
+        const msg = document.createElement("p");
+        msg.className = "already-submitted-msg";
+        msg.innerText = "আপনি ইতিপূর্বে পরীক্ষাটি সম্পন্ন করেছেন। পুনরায় অংশগ্রহণ করা যাবে না।";
+        document.getElementById("quizForm").appendChild(msg);
+    }
+
+    // On Page Load Check
+    window.onload = function() {
+        renderQuiz();
+        const savedResult = localStorage.getItem("math_quiz_7_result");
+        if (savedResult) {
+            const resultData = JSON.parse(savedResult);
+            // Pre-select user choices
+            resultData.userAnswers.forEach((ans, index) => {
+                if (ans !== -1) {
+                    const radio = document.querySelector(`input[name="q${index}"][value="${ans}"]`);
+                    if (radio) radio.checked = true;
+                }
+            });
+            showResults(resultData.score, resultData.userAnswers);
+        } else {
+            startTimer();
+        }
+    };
+</script>
+
+</body>
+</html>
