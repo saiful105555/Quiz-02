@@ -3,640 +3,573 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>১০ম শ্রেণী টিউটোরিয়াল প্রস্তুতি - বিজ্ঞান (বল)</title>
+    <title>১০ম শ্রেণী টিউটোরিয়াল প্রস্তুতি - বিজ্ঞান</title>
     <style>
+        :root {
+            --primary-color: #4A0E4E;
+            --secondary-color: #810551;
+            --accent-color: #00D2FF;
+            --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-color: #2D3748;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'SolaimanLipi', Arial, sans-serif;
+            font-family: 'Kalpurush', 'SolaimanLipi', Arial, sans-serif;
         }
+
         body {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: #333;
-            padding: 20px;
+            background: var(--bg-gradient);
+            color: var(--text-color);
             min-height: 100vh;
+            padding: 20px 10px;
         }
+
         .container {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            overflow: hidden;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
+
         .header {
-            background: linear-gradient(90deg, #ff9966, #ff5e62);
-            color: white;
-            padding: 20px;
             text-align: center;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
         }
+
         .header h1 {
+            color: var(--primary-color);
             font-size: 24px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
-        .header p {
-            font-size: 14px;
-            margin: 3px 0;
-        }
-        .timer-box {
-            background: #333;
-            color: #00ffcc;
-            text-align: center;
-            padding: 10px;
+
+        .header h2 {
+            color: var(--secondary-color);
             font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .meta-info {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            padding: 12px;
+            border-radius: 10px;
             font-weight: bold;
+            color: #333;
+            display: inline-block;
+            margin-top: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .sticky-timer {
             position: sticky;
-            top: 0;
+            top: 10px;
             z-index: 100;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background: #111;
+            color: #00ffcc;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            border: 2px solid #00ffcc;
         }
-        .instructions {
-            background: #fdf2e9;
-            border-left: 5px solid #e67e22;
-            padding: 15px;
-            margin: 15px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        .instructions h3 {
-            margin-bottom: 5px;
-            color: #d35400;
-        }
-        .instructions ol {
-            margin-left: 20px;
-        }
-        .quiz-body {
+
+        .student-info {
+            background: #f0f4f8;
             padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--secondary-color);
         }
-        .passage {
-            background: #eaf2f8;
-            border-left: 4px solid #3498db;
-            padding: 10px 15px;
-            margin: 15px 0;
-            font-style: italic;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .question-card {
-            background: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 15px;
+
+        .input-group {
             margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
             transition: 0.3s;
         }
-        .question-card:hover {
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+        .input-group input:focus {
+            border-color: var(--secondary-color);
         }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
         .question-title {
             font-weight: bold;
-            margin-bottom: 10px;
-            color: #2c3e50;
+            font-size: 17px;
+            color: #1a202c;
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
-        .options-list {
-            list-style: none;
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
-        .options-list li {
-            margin: 8px 0;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 8px 12px;
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            padding: 12px 15px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            font-size: 15px;
         }
-        .options-list li:hover {
-            background: #f1f8ff;
-            border-color: #3498db;
+
+        .option-label:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
         }
-        .options-list label {
-            cursor: pointer;
-            display: block;
-            width: 100%;
+
+        .option-label input {
+            margin-right: 10px;
+            transform: scale(1.2);
+            accent-color: var(--secondary-color);
         }
+
         .submit-btn {
             display: block;
             width: 100%;
-            background: linear-gradient(90deg, #00b09b, #96c93d);
+            background: linear-gradient(45deg, #11998e, #38ef7d);
             color: white;
-            border: none;
-            padding: 12px;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            border-radius: 8px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
             cursor: pointer;
-            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);
             transition: 0.3s;
+            margin-top: 20px;
         }
+
         .submit-btn:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(56, 239, 125, 0.6);
         }
-        .result-box {
+
+        #result-section {
             display: none;
             text-align: center;
-            padding: 30px;
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
         }
-        .result-box h2 {
-            color: #27ae60;
-            margin-bottom: 15px;
+
+        #result-section h2 {
+            color: #15803d;
+            margin-bottom: 10px;
         }
+
+        .score-display {
+            font-size: 28px;
+            font-weight: bold;
+            color: #166534;
+            margin: 15px 0;
+        }
+
         .whatsapp-btn {
-            display: inline-block;
-            background: #25d366;
+            background: #25D366;
             color: white;
+            font-size: 18px;
+            font-weight: bold;
             padding: 12px 25px;
-            text-decoration: none;
+            border: none;
             border-radius: 30px;
-            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
             margin-top: 15px;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
         }
-        .correct {
-            background-color: #d4edda !important;
-            border-color: #c3e6cb !important;
-            color: #155724;
+
+        .whatsapp-btn:hover {
+            background: #1da851;
         }
-        .incorrect {
-            background-color: #f8d7da !important;
-            border-color: #f5c6cb !important;
-            color: #721c24;
-        }
-        .locked-msg {
-            text-align: center;
-            padding: 50px;
-            font-size: 20px;
-            color: #c0392b;
+
+        .correct-opt {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d !important;
             font-weight: bold;
+        }
+
+        .wrong-opt {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
         }
     </style>
 </head>
 <body>
 
-<div class="container" id="mainContainer">
+<div class="container">
     <div class="header">
         <h1>১০ম শ্রেণী টিউটোরিয়াল প্রস্তুতি</h1>
-        <p>বিষয়: বিজ্ঞান (বল)</p>
-        <p>সার্বিক তত্ত্বাবধানে: সাইফুল ইসলাম</p>
-        <p>মোবাইল: ০১৬২২১৮৬৮১২</p>
+        <h2>বিষয়: বিজ্ঞান (দেখতে হলে আলো চাই)</h2>
+        <div class="meta-info">
+            সার্বিক তত্ত্বাবধানে: সাইফুল ইসলাম | মোবাইল: ০১৬২২১৮৬৮১২
+        </div>
     </div>
 
-    <div class="timer-box" id="timer">সময় বাকি: ২০:০০ মিনিট</div>
-
-    <div class="instructions" id="instructionBox">
-        <h3>নির্দেশনা:</h3>
-        <ol>
-            <li>পরীক্ষাটিতে মাত্র একবার অংশগ্রহণ করতে পারবে। সাবমিট করার পর পেইজটি স্বয়ংক্রিয় ভাবে লক হয়ে যাবে।</li>
-            <li>সাবমিট করার পর WhatsApp - এ রেজাল্ট শেয়ার করুন বাটনে ক্লিক করবে।</li>
-        </ol>
+    <div class="sticky-timer" id="timer-display">
+        অবশিষ্ট সময়: ৩০:০০
     </div>
 
-    <div class="quiz-body" id="quizBody">
-        <form id="quizForm">
-            <!-- Passage 1 -->
-            <div class="passage">নিচের তথ্য হতে পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>একটি বস্তুর ভর 20 কেজি। বস্তুটির ওপর একটি বল প্রযুক্ত হওয়ায় 2 সে. পরে বস্তুটি 4 মি./সে. বেগপ্রাপ্ত হয়।</div>
-            
-            <div class="question-card" data-q="1">
-                <div class="question-title">১. 2 সে. পরে বস্তুটির ত্বরণ কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q1" value="ক"> (ক) 1 m/s²</label></li>
-                    <li><label><input type="radio" name="q1" value="খ"> (খ) 2 m/s²</label></li>
-                    <li><label><input type="radio" name="q1" value="গ"> (গ) 3 m/s²</label></li>
-                    <li><label><input type="radio" name="q1" value="ঘ"> (ঘ) 4 m/s²</label></li>
-                </ul>
+    <form id="quiz-form">
+        <div class="student-info">
+            <div class="input-group">
+                <label for="student-name">শিক্ষার্থীর নাম *</label>
+                <input type="text" id="student-name" required placeholder="আপনার নাম লিখুন">
             </div>
-
-            <div class="question-card" data-q="2">
-                <div class="question-title">২. বস্তুর উপর বল প্রযুক্ত হওয়ায়—<br>i. 2 সে. পরে বস্তুটির ভরবেগ 80 কেজি. মি./সে.<br>ii. 2 সে. পরে বস্তুটির ভরবেগের পরিবর্তন 20 কেজি. মি./সে.<br>iii. প্রযুক্ত বলের মান 40 নিউটন<br>নিচের কোনটি সঠিক?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q2" value="ক"> (ক) i ও ii</label></li>
-                    <li><label><input type="radio" name="q2" value="খ"> (খ) i ও iii</label></li>
-                    <li><label><input type="radio" name="q2" value="গ"> (গ) ii ও iii</label></li>
-                    <li><label><input type="radio" name="q2" value="ঘ"> (ঘ) i, ii ও iii</label></li>
-                </ul>
+            <div class="input-group">
+                <label for="student-roll">রোল নম্বর *</label>
+                <input type="text" id="student-roll" required placeholder="আপনার রোল নাম্বার লিখুন">
             </div>
+        </div>
 
-            <!-- Passage 2 -->
-            <div class="passage">নিচের প্রাপ্ত তথ্য হতে পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>প্রত্যেক ক্রিয়া বলেরই একটি সমান ও বিপরীত প্রতিক্রিয়া বল আছে।</div>
+        <div id="questions-container"></div>
 
-            <div class="question-card" data-q="3">
-                <div class="question-title">৩. সূত্রটি নিউটনের কোন ধরনের সূত্র?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q3" value="ক"> (ক) বল বিষয়ক</label></li>
-                    <li><label><input type="radio" name="q3" value="খ"> (খ) ক্রিয়া বিষয়ক</label></li>
-                    <li><label><input type="radio" name="q3" value="গ"> (গ) ভর বিষয়ক</label></li>
-                    <li><label><input type="radio" name="q3" value="ঘ"> (ঘ) গতিবিষয়ক</label></li>
-                </ul>
-            </div>
+        <button type="button" class="submit-btn" id="submit-btn" onclick="submitQuiz()">পরীক্ষা জমা দিন</button>
+    </form>
 
-            <div class="question-card" data-q="4">
-                <div class="question-title">৪. সূত্রটির উদাহরণ—<br>i. দেয়ালে আঘাত করার কারণ ব্যথা পাওয়া<br>ii. পায়ে হাঁটার প্রক্রিয়া<br>iii. লগি দিয়ে নৌকা ঠেলা<br>নিচের কোনটি সঠিক?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q4" value="ক"> (ক) i ও ii</label></li>
-                    <li><label><input type="radio" name="q4" value="খ"> (খ) i ও iii</label></li>
-                    <li><label><input type="radio" name="q4" value="গ"> (গ) ii ও iii</label></li>
-                    <li><label><input type="radio" name="q4" value="ঘ"> (ঘ) i, ii ও iii</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 3 -->
-            <div class="passage">নিচের অনুচ্ছেদটি পড় এবং পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>2N বলের একটি বস্তুকে 5 m/s² ত্বরণে গড়িয়ে দেওয়া হলো। বস্তুটি কিছুদূর যাওয়ার পর থেমে গেল।</div>
-
-            <div class="question-card" data-q="5">
-                <div class="question-title">৫. বস্তুটির ভর কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q5" value="ক"> (ক) 0.2 কেজি</label></li>
-                    <li><label><input type="radio" name="q5" value="খ"> (খ) 0.4 কেজি</label></li>
-                    <li><label><input type="radio" name="q5" value="গ"> (গ) 0.5 কেজি</label></li>
-                    <li><label><input type="radio" name="q5" value="ঘ"> (ঘ) 0.6 কেজি</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="6">
-                <div class="question-title">৬. কোন বলের কারণে বস্তুটি থেমে গেল?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q6" value="ক"> (ক) মহাকর্ষ বল</label></li>
-                    <li><label><input type="radio" name="q6" value="খ"> (খ) তড়িৎ চৌম্বক বল</label></li>
-                    <li><label><input type="radio" name="q6" value="গ"> (গ) ঘর্ষণ বল</label></li>
-                    <li><label><input type="radio" name="q6" value="ঘ"> (ঘ) নিউক্লীয় বল</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 4 -->
-            <div class="passage">নিচের উদ্দীপকের আলোকে পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>10 নিউটন বল প্রয়োগ একটি লোহ গোলককে 5 m/s² ত্বরণে মাটিতে গড়িয়ে দেওয়া হলো। গোলকটি কিছুদূর যাওয়ার পর থেমে গেল।</div>
-
-            <div class="question-card" data-q="7">
-                <div class="question-title">৭. গোলকটির ভর কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q7" value="ক"> (ক) 2 কেজি</label></li>
-                    <li><label><input type="radio" name="q7" value="খ"> (খ) 5 কেজি</label></li>
-                    <li><label><input type="radio" name="q7" value="গ"> (গ) 12 কেজি</label></li>
-                    <li><label><input type="radio" name="q7" value="ঘ"> (ঘ) 50 কেজি</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="8">
-                <div class="question-title">৮. গোলকটি থেমে যাওয়ার কারণ কী?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q8" value="ক"> (ক) মহাকর্ষ বল</label></li>
-                    <li><label><input type="radio" name="q8" value="খ"> (খ) চৌম্বক বল</label></li>
-                    <li><label><input type="radio" name="q8" value="গ"> (গ) ঘর্ষণ বল</label></li>
-                    <li><label><input type="radio" name="q8" value="ঘ"> (ঘ) তড়িৎ চৌম্বক বল</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 5 -->
-            <div class="passage">নিচের অনুচ্ছেদটি পড় এবং পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>10 কেজি ভরের কোনো বস্তুর উপর 40 নিউটন বল প্রয়োগ করা হলো।</div>
-
-            <div class="question-card" data-q="9">
-                <div class="question-title">৯. উদ্দীপকের সমস্যার সমাধানে নিউটনের কোন সূত্রের প্রয়োগ হবে?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q9" value="ক"> (ক) মহাকর্ষ সূত্র</label></li>
-                    <li><label><input type="radio" name="q9" value="খ"> (খ) ক্রিয়া-প্রতিক্রিয়া সূত্র</label></li>
-                    <li><label><input type="radio" name="q9" value="গ"> (গ) ভরবেগের সূত্র</label></li>
-                    <li><label><input type="radio" name="q9" value="ঘ"> (ঘ) বলের সূত্র</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="10">
-                <div class="question-title">১০. উদ্দীপকের আলোকে ত্বরণ হবে—</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q10" value="ক"> (ক) 4 m/s²</label></li>
-                    <li><label><input type="radio" name="q10" value="খ"> (খ) 2 m/s²</label></li>
-                    <li><label><input type="radio" name="q10" value="গ"> (গ) 4 মি./সে.</label></li>
-                    <li><label><input type="radio" name="q10" value="ঘ"> (ঘ) 2 মি./সে.</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 6 -->
-            <div class="passage">নিচের উদ্দীপকটি পড় এবং পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>গালিব 30 কেজি ভরের একটি স্থিরবস্তুর উপর 60 নিউটন বল প্রয়োগ করে।</div>
-
-            <div class="question-card" data-q="11">
-                <div class="question-title">১১. উদ্দীপকের বস্তুটির ত্বরণ কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q11" value="ক"> (ক) 0.2 m/s²</label></li>
-                    <li><label><input type="radio" name="q11" value="খ"> (খ) 1.5 m/s²</label></li>
-                    <li><label><input type="radio" name="q11" value="গ"> (গ) 2 m/s²</label></li>
-                    <li><label><input type="radio" name="q11" value="ঘ"> (ঘ) 1 m/s²</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="12">
-                <div class="question-title">১২. উদ্দীপকের গালিব বস্তুটির ওপর প্রযুক্ত বলের অর্ধেক বল প্রয়োগ করলে—<br>i. প্রতিক্রিয়া বল বেশি হবে<br>ii. বস্তুর ভর কমে যাবে<br>iii. ত্বরণ কমে যাবে<br>নিচের কোনটি সঠিক?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q12" value="ক"> (ক) i ও ii</label></li>
-                    <li><label><input type="radio" name="q12" value="খ"> (খ) i ও iii</label></li>
-                    <li><label><input type="radio" name="q12" value="গ"> (গ) iii</label></li>
-                    <li><label><input type="radio" name="q12" value="ঘ"> (ঘ) i, ii ও iii</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 7 -->
-            <div class="passage">নিচের অনুচ্ছেদটি পড় এবং পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>4N বলে একটি বস্তুকে 8 m/s² ত্বরণে মেঝোতে ছুড়ে দেওয়া হলো। বস্তুটি কিছু দূর যাওয়ার পর থেমে গেল।</div>
-
-            <div class="question-card" data-q="13">
-                <div class="question-title">১৩. বস্তুটির ভর কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q13" value="ক"> (ক) 200 gm</label></li>
-                    <li><label><input type="radio" name="q13" value="খ"> (খ) 400 gm</label></li>
-                    <li><label><input type="radio" name="q13" value="গ"> (গ) 500 gm</label></li>
-                    <li><label><input type="radio" name="q13" value="ঘ"> (ঘ) 750 gm</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="14">
-                <div class="question-title">১৪. কোন বলের কারণে বস্তুটি থেমে গেল?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q14" value="ক"> (ক) ঘর্ষণ বল</label></li>
-                    <li><label><input type="radio" name="q14" value="খ"> (খ) মহাকর্ষ বল</label></li>
-                    <li><label><input type="radio" name="q14" value="গ"> (গ) চৌম্বক বল</label></li>
-                    <li><label><input type="radio" name="q14" value="ঘ"> (ঘ) তড়িৎ চৌম্বক বল</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 8 -->
-            <div class="passage">নিচের উদ্দীপকটি লক্ষ্য কর এবং পরবর্তী ৩টি প্রশ্নের উত্তর দাও:<br>রিপু 15 g ও 25 g ভরের দুটি মার্বেল নিয়ে খেলছিল।</div>
-
-            <div class="question-card" data-q="15">
-                <div class="question-title">১৫. ১ম মার্বেলটির উপর 45 নিউটন বল প্রয়োগ করলে ত্বরণ কত হবে?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q15" value="ক"> (ক) 0.33 m/s²</label></li>
-                    <li><label><input type="radio" name="q15" value="খ"> (খ) 3000 m/s²</label></li>
-                    <li><label><input type="radio" name="q15" value="গ"> (গ) 60 m/s²</label></li>
-                    <li><label><input type="radio" name="q15" value="ঘ"> (ঘ) 675 m/s²</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="16">
-                <div class="question-title">১৬. একই পরিমাণ বল প্রয়োগ করলে মার্বেল কোনটির উপর দিয়ে বেশি দূরত্ব অতিক্রম করবে?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q16" value="ক"> (ক) মসৃণ মাটির মেঝে</label></li>
-                    <li><label><input type="radio" name="q16" value="খ"> (খ) টাইলস এর মেঝে</label></li>
-                    <li><label><input type="radio" name="q16" value="গ"> (গ) পিচ রাস্তা</label></li>
-                    <li><label><input type="radio" name="q16" value="ঘ"> (ঘ) ইটের রাস্তা</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="17">
-                <div class="question-title">১৭. মার্বেল দুটির ক্ষেত্রে—<br>i. 2ndটির ঘর্ষণ বল 1stটির অপেক্ষা বেশি<br>ii. 2ndটির গতিজড়তা কম হবে<br>iii. মসৃণ মেঝোতে দুটির গতিবেগ একই হবে<br>নিচের কোনটি সঠিক?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q17" value="ক"> (ক) i</label></li>
-                    <li><label><input type="radio" name="q17" value="খ"> (খ) i ও ii</label></li>
-                    <li><label><input type="radio" name="q17" value="গ"> (গ) ii ও iii</label></li>
-                    <li><label><input type="radio" name="q17" value="ঘ"> (ঘ) i, ii ও iii</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 9 -->
-            <div class="passage">নিচের অনুচ্ছেদটি পড় এবং পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>কোথাও একটি বস্তুর ভর 20 কেজি এবং এর উপর 2 সেকেন্ড ধরে বল প্রয়োগ করে স্থির অবস্থা থেকে 4 মি./সেকেন্ড বেগ সৃষ্টি করা হলো।</div>
-
-            <div class="question-card" data-q="18">
-                <div class="question-title">১৮. উদ্দীপকে নিউটনের কোন সূত্রের প্রয়োগ রয়েছে?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q18" value="ক"> (ক) ১ম</label></li>
-                    <li><label><input type="radio" name="q18" value="খ"> (খ) ২য়</label></li>
-                    <li><label><input type="radio" name="q18" value="গ"> (গ) ৩য়</label></li>
-                    <li><label><input type="radio" name="q18" value="ঘ"> (ঘ) ভরবেগ</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="19">
-                <div class="question-title">১৯. বস্তুটিতে কত নিউটন বল প্রয়োগ করা হয়েছিল?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q19" value="ক"> (ক) 10</label></li>
-                    <li><label><input type="radio" name="q19" value="খ"> (খ) 20</label></li>
-                    <li><label><input type="radio" name="q19" value="গ"> (গ) 30</label></li>
-                    <li><label><input type="radio" name="q19" value="ঘ"> (ঘ) 40</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 10 -->
-            <div class="passage">নিচের অনুচ্ছেদটি পড় এবং পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>বল প্রয়োগ করায় 40 কেজি ভরের কোনো বস্তু 4 m/s² ত্বরণে চলছিল। কিছুটা পর বস্তুটি থেমে গেল।</div>
-
-            <div class="question-card" data-q="20">
-                <div class="question-title">২০. এর উপরে প্রযুক্ত বল কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q20" value="ক"> (ক) 20 নিউটন</label></li>
-                    <li><label><input type="radio" name="q20" value="খ"> (খ) 80 নিউটন</label></li>
-                    <li><label><input type="radio" name="q20" value="গ"> (গ) 120 নিউটন</label></li>
-                    <li><label><input type="radio" name="q20" value="ঘ"> (ঘ) 160 নিউটন</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="21">
-                <div class="question-title">২১. বস্তুটি থেমে যাওয়ার কারণ—</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q21" value="ক"> (ক) ঘর্ষণ বল</label></li>
-                    <li><label><input type="radio" name="q21" value="খ"> (খ) মহাকর্ষ বল</label></li>
-                    <li><label><input type="radio" name="q21" value="গ"> (গ) চৌম্বক বল</label></li>
-                    <li><label><input type="radio" name="q21" value="ঘ"> (ঘ) তড়িৎ চৌম্বক বল</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 11 -->
-            <div class="passage">নিচের উদ্দীপকটি পড় এবং পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>2N বলে একটি বস্তুকে 5 m/s² ত্বরণে মেঝোতে ছুড়ে দেওয়া হলো। বস্তুটি কিছুদূর যাওয়ার পর থেমে গেল।</div>
-
-            <div class="question-card" data-q="22">
-                <div class="question-title">২২. বস্তুটির ভর কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q22" value="ক"> (ক) 200 gm</label></li>
-                    <li><label><input type="radio" name="q22" value="খ"> (খ) 400 gm</label></li>
-                    <li><label><input type="radio" name="q22" value="গ"> (গ) 500 gm</label></li>
-                    <li><label><input type="radio" name="q22" value="ঘ"> (ঘ) 800 gm</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="23">
-                <div class="question-title">২৩. কোন বলের কারণে বস্তুটি থেমে গেল?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q23" value="ক"> (ক) ঘর্ষণ বল</label></li>
-                    <li><label><input type="radio" name="q23" value="খ"> (খ) মহাকর্ষ বল</label></li>
-                    <li><label><input type="radio" name="q23" value="গ"> (গ) চৌম্বক বল</label></li>
-                    <li><label><input type="radio" name="q23" value="ঘ"> (ঘ) তড়িৎ চৌম্বক বল</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 12 -->
-            <div class="passage">নিচের উদ্দীপকটি পড় এবং পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>সাজেক হাত থেকে একটি বল ছেড়ে দিলে তা মাটিতে পড়ে। অপরদিকে কাচের দুটি দণ্ডকে কাছাকাছি আনলে তারা পরস্পর আকর্ষণ ও বিকর্ষণ করে।</div>
-
-            <div class="question-card" data-q="24">
-                <div class="question-title">২৪. কাচের দণ্ড দুটি—<br>i. উভয়ই চৌম্বক পদার্থ<br>ii. উভয়ই চুম্বক<br>iii. একটি চুম্বক, অন্যটি চৌম্বক পদার্থ<br>নিচের কোনটি সঠিক?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q24" value="ক"> (ক) i</label></li>
-                    <li><label><input type="radio" name="q24" value="খ"> (খ) ii</label></li>
-                    <li><label><input type="radio" name="q24" value="গ"> (গ) iii</label></li>
-                    <li><label><input type="radio" name="q24" value="ঘ"> (ঘ) i ও ii</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="25">
-                <div class="question-title">২৫. কাচের প্রতিটির মত করে একটি লোহার টুকরা আনলে কী ঘটবে?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q25" value="ক"> (ক) লোহার টুকরায় মরিচা পড়বে</label></li>
-                    <li><label><input type="radio" name="q25" value="খ"> (খ) টুকরাটি পরশ হবে</label></li>
-                    <li><label><input type="radio" name="q25" value="গ"> (গ) বিকর্ষণ হবে</label></li>
-                    <li><label><input type="radio" name="q25" value="ঘ"> (ঘ) আকর্ষণ হবে</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 13 -->
-            <div class="passage">নিচের প্রাপ্ত তথ্য হতে পরবর্তী ২টি প্রশ্নের উত্তর দাও:<br>রত একটি মার্বেলকে মাটিতে গড়িয়ে দিয়ে এর অতিক্রান্ত দূরত্ব পরিমাপ করল। একই মার্বেলকে সে আবার পাকা মেঝোতে গড়িয়ে দিয়ে দেখল মার্বেলটি মাটি থেকে মেঝোতে বেশি দূরত্ব অতিক্রম করেছে।</div>
-
-            <div class="question-card" data-q="26">
-                <div class="question-title">২৬. মার্বেলটি মেঝের চেয়ে মাটিতে কম দূরত্ব অতিক্রম করল কেন?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q26" value="ক"> (ক) মাটি মসৃণ বেশি</label></li>
-                    <li><label><input type="radio" name="q26" value="খ"> (খ) মাটিতে জড়তা বেশি</label></li>
-                    <li><label><input type="radio" name="q26" value="গ"> (গ) মাটি কম মসৃণ</label></li>
-                    <li><label><input type="radio" name="q26" value="ঘ"> (ঘ) মাটিতে জড়তা কম</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="27">
-                <div class="question-title">২৭. মার্বেলটি মেঝোতে বেশি দূরত্ব অতিক্রম করল কারণ—<br>i. মেঝোতে ঘর্ষণ কম<br>ii. মেঝে বেশি মসৃণ<br>iii. মার্বেলের ভর বেশি<br>নিচের কোনটি সঠিক?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q27" value="ক"> (ক) i ও ii</label></li>
-                    <li><label><input type="radio" name="q27" value="খ"> (খ) ii ও iii</label></li>
-                    <li><label><input type="radio" name="q27" value="গ"> (গ) i ও iii</label></li>
-                    <li><label><input type="radio" name="q27" value="ঘ"> (ঘ) i, ii ও iii</label></li>
-                </ul>
-            </div>
-
-            <!-- Passage 14 -->
-            <div class="passage">নিচের উদ্দীপকটি লক্ষ্য কর এবং পরবর্তী ৩টি প্রশ্নের উত্তর দাও:<br>5 kg ভরের একটি বস্তুর ওপর 20 N বল প্রয়োগ করায় বস্তুটি মেঝের ওপর দিয়ে চলতে শুরু করে এবং 2 m/s² ত্বরণ লাভ করে।</div>
-
-            <div class="question-card" data-q="28">
-                <div class="question-title">২৮. বস্তুর ওপর কার্যকর নিট বল কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q28" value="ক"> (ক) 5 N</label></li>
-                    <li><label><input type="radio" name="q28" value="খ"> (খ) 10 N</label></li>
-                    <li><label><input type="radio" name="q28" value="গ"> (গ) 15 N</label></li>
-                    <li><label><input type="radio" name="q28" value="ঘ"> (ঘ) 20 N</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="29">
-                <div class="question-title">২৯. মেঝে ও বস্তুর মধ্যকার ঘর্ষণ বলের মান কত?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q29" value="ক"> (ক) 5 N</label></li>
-                    <li><label><input type="radio" name="q29" value="খ"> (খ) 10 N</label></li>
-                    <li><label><input type="radio" name="q29" value="গ"> (গ) 15 N</label></li>
-                    <li><label><input type="radio" name="q29" value="ঘ"> (ঘ) 20 N</label></li>
-                </ul>
-            </div>
-
-            <div class="question-card" data-q="30">
-                <div class="question-title">৩০. যদি প্রযুক্ত বল দ্বিগুণ করা হয়, তবে বস্তুর ত্বরণ কত হবে?</div>
-                <ul class="options-list">
-                    <li><label><input type="radio" name="q30" value="ক"> (ক) 4 m/s²</label></li>
-                    <li><label><input type="radio" name="q30" value="খ"> (খ) 6 m/s²</label></li>
-                    <li><label><input type="radio" name="q30" value="গ"> (গ) 8 m/s²</label></li>
-                    <li><label><input type="radio" name="q30" value="ঘ"> (ঘ) 10 m/s²</label></li>
-                </ul>
-            </div>
-
-            <button type="button" class="submit-btn" onclick="submitExam()">পরীক্ষা জমা দিন</button>
-        </form>
-    </div>
-
-    <div class="result-box" id="resultBox">
-        <h2>পরীক্ষা সফলভাবে সম্পন্ন হয়েছে!</h2>
-        <p id="scoreText" style="font-size: 20px; font-weight: bold; margin: 15px 0;"></p>
-        <a href="#" id="whatsappBtn" class="whatsapp-btn" target="_blank">WhatsApp এ রেজাল্ট শেয়ার করুন</a>
+    <div id="result-section">
+        <h2>পরীক্ষার ফলাফল</h2>
+        <p id="student-details" style="font-size: 18px; font-weight: bold;"></p>
+        <div class="score-display" id="score-text"></div>
+        <p id="time-taken-text" style="color: #555;"></p>
+        
+        <a id="wa-share-link" class="whatsapp-btn" target="_blank">
+            রেজাল্ট WhatsApp এ শেয়ার করুন
+        </a>
     </div>
 </div>
 
 <script>
-    // সঠিক উত্তরের তালিকা (ক, খ, গ, ঘ সুষম অনুপাতে সেট করা হয়েছে)
-    const answers = {
-        q1: "ঘ", q2: "ঘ", q3: "ঘ", q4: "ঘ", q5: "গ",
-        q6: "গ", q7: "ক", q8: "গ", q9: "ঘ", q10: "ক",
-        q11: "গ", q12: "খ", q13: "খ", q14: "ক", q15: "খ",
-        q16: "খ", q17: "ঘ", q18: "খ", q19: "ঘ", q20: "খ",
-        q21: "ক", q22: "খ", q23: "ক", q24: "গ", q25: "ঘ",
-        q26: "খ", q27: "ক", q28: "ঘ", q29: "গ", q30: "ক"
-    };
-
-    // পরীক্ষা আগে দিয়েছে কিনা চেক করা
-    if(localStorage.getItem('examSubmitted')) {
-        showLockedScreen();
+const questionsData = [
+    {
+        q: "১. উত্তল লেন্সের মধ্যভাগ কেমন?",
+        options: ["সরু", "মোটা", "সমান", "অবতল"],
+        ans: 1
+    },
+    {
+        q: "২. অবতল লেন্সের প্রধান অক্ষের সমান্তরাল আলোক রশ্মিগুচ্ছ প্রতিসরণের পর কী হয়?",
+        options: ["এক বিন্দুতে মিলিত হয়", "অপসারী হয় (ছড়িয়ে পড়ে)", "সোজা চলে যায়", "প্রতিফলিত হয়"],
+        ans: 1
+    },
+    {
+        q: "৩. চোখের কোন অংশে বস্তুর উল্টো প্রতিবিম্ব গঠিত হয়?",
+        options: ["কর্নিয়া", "অক্ষিগোলক", "রেটিনা", "আইরিস"],
+        ans: 2
+    },
+    {
+        q: "৪. চোখের যে আলোড়ন মস্তিষ্ক পর্যন্ত পৌঁছায় তা কিসের মাধ্যমে যায়?",
+        options: ["অপটিক নার্ভ (অক্ষিস্নাযু)", "রেটিনা", "সিলিয়ারি পেশি", "আকুয়াস হিউমার"],
+        ans: 0
+    },
+    {
+        q: "৫. চোখের উপযোজন (Accommodation) ক্ষমতায় সাহায্য করে কোনটি?",
+        options: ["কর্নিয়া", "সিলিয়ারি পেশি", "পিউপিল (তারারন্ধ্র)", "রেটিনা"],
+        ans: 1
+    },
+    {
+        q: "৬. একজন স্পষ্ট দৃষ্টির ন্যূনতম দূরত্ব (Near point) সাধারণত কত?",
+        options: ["২৫ সেমি", "৫০ সেমি", "১০ সেমি", "অসীম"],
+        ans: 0
+    },
+    {
+        q: "৭. বয়স্ক মানুষের স্বাভাবিক চোখের দূর বিন্দু (Far point) কোথায় অবস্থিত?",
+        options: ["২৫ সেমি দূরত্বে", "১ মিটার দূরত্বে", "১০০ সেমি দূরত্বে", "অসীম দূরত্বে"],
+        ans: 3
+    },
+    {
+        q: "৮. হ্রস্বদৃষ্টি বা ক্ষীণদৃষ্টি (Myopia) ত্রুটির কারণ কী?",
+        options: ["অক্ষিগোলকের ব্যাসার্ধ কমে যাওয়া", "লেন্সের ফোকাস দূরত্ব বেড়ে যাওয়া", "লেন্সের অভিসারী ক্ষমতা বৃদ্ধি পাওয়া", "লেন্সের ক্ষমতা কমে যাওয়া"],
+        ans: 2
+    },
+    {
+        q: "৯. মাইওপিয়া বা হ্রস্বদৃষ্টি প্রতিকারে কোন লেন্সের চশমা ব্যবহার করা হয়?",
+        options: ["উত্তল লেন্স", "অবতল লেন্স", "দ্বি-উত্তল লেন্স", "সমতল লেন্স"],
+        ans: 1
+    },
+    {
+        q: "১০. দীর্ঘদৃষ্টি (Hypermetropia) ত্রুটি দূর করতে কোন ধরনের লেন্স প্রয়োজন?",
+        options: ["অবতল লেন্স", "সমতল লেন্স", "উত্তল লেন্স", "প্রিজম"],
+        ans: 2
+    },
+    {
+        q: "১১. লেন্সের ক্ষমতার একক কী?",
+        options: ["মিটার", "ডায়প্টার (Dioptre)", "ওয়াট", "জুল"],
+        ans: 1
+    },
+    {
+        q: "১২. একটি উত্তল লেন্সের ফোকাস দূরত্ব ৫০ সেমি হলে এর ক্ষমতা কত?",
+        options: ["+0.5 D", "+2 D", "-2 D", "+1 D"],
+        ans: 1
+    },
+    {
+        q: "১৩. শূন্যস্থানে আলোর বেগ কত?",
+        options: ["3 × 10⁸ m/s", "3 × 10⁶ m/s", "3 × 10¹⁰ m/s", "1.5 × 10⁸ m/s"],
+        ans: 0
+    },
+    {
+        q: "১৪. লেন্সের বক্রতার কেন্দ্রদ্বয়ের সংযোগকারী সরলরেখাকে কী বলে?",
+        options: ["ফোকাস দূরত্ব", "প্রধান অক্ষ", "আলোক কেন্দ্র", "গৌণ অক্ষ"],
+        ans: 1
+    },
+    {
+        q: "১৫. আলো যখন লঘুতর মাধ্যম থেকে ঘন মাধ্যমে প্রবেশ করে, তখন প্রতিসরিত রশ্মি—",
+        options: ["অভিলম্ব থেকে দূরে সরে যায়", "অভিলম্বের দিকে সরে আসে", "সোজা চলে যায়", "সম্পূর্ণ প্রতিফলিত হয়"],
+        ans: 1
+    },
+    {
+        q: "১৬. স্নেলের সূত্রটি আলোর কোন ঘটনার সাথে সম্পর্কিত?",
+        options: ["প্রতিফলন", "প্রতিসরণ", "বিচ্ছুরণ", "ব্যতিচার"],
+        ans: 1
+    },
+    {
+        q: "১৭. চোখে প্রবেশ করা আলোর পরিমাণ নিয়ন্ত্রণ করে কোনটি?",
+        options: ["কর্নিয়া", "আইরিস", "লেন্স", "পিউপিল বা তারারন্ধ্র"],
+        ans: 3
+    },
+    {
+        q: "১৮. চালসে (Presbyopia) চোখ সাধারণত কাদের দেখা যায়?",
+        options: ["শিশুদের", "তরুণদের", "প্রবীণ বা বয়স্ক ব্যক্তিদের", "নবজাতকদের"],
+        ans: 2
+    },
+    {
+        q: "১৯. চোখের পিউপিল অন্ধকার ঘরে কেমন হয়?",
+        options: ["ছোট হয়ে যায়", "বড় হয়ে যায়", "অপরিবর্তিত থাকে", "বন্ধ হয়ে যায়"],
+        ans: 1
+    },
+    {
+        q: "২০. চোখের ভেতরের প্রকোষ্ঠে থাকা জলীয় তরলকে কী বলে?",
+        options: ["ভিট্রিয়াস হিউমার", "আকুয়াস হিউমার", "প্লাজমা", "সেরাম"],
+        ans: 1
+    },
+    {
+        q: "২১. রঙিন বস্তুর উপস্থিতি ও রঙ চিনতে সাহায্য করে রেটিনার কোন কোষ?",
+        options: ["রড (Rod) কোষ", "কোণ (Cone) কোষ", "নার্ভ কোষ", "স্নায়ু কোষ"],
+        ans: 1
+    },
+    {
+        q: "২২. অবতল লেন্সের ক্ষমতা সবসময় কেমন হয়?",
+        options: ["ধনাত্মক", "ঋণাত্মক", "শূন্য", "অসীম"],
+        ans: 1
+    },
+    {
+        q: "২৩. উত্তল লেন্সের ফোকাস দূরত্ব ২৫ সেমি হলে লেন্সটির ক্ষমতা কত?",
+        options: ["+4 D", "-4 D", "+2.5 D", "+0.25 D"],
+        ans: 0
+    },
+    {
+        q: "২৪. চোখের রেটিনা ও লেন্সের মধ্যবর্তী ফাঁকা স্থানের জেলীর মতো তরলকে কী বলে?",
+        options: ["আকুয়াস হিউমার", "ভিট্রিয়াস হিউমার", "প্লাজমা", "প্রোটিন"],
+        ans: 1
+    },
+    {
+        q: "২৫. বর্ণান্ধতা (Color Blindness) কিসের ত্রুটি?",
+        options: ["সিলিয়ারি পেশির", "চোখের লেন্সের", "রেটিনার কোণ কোষের", "কর্নিয়া"],
+        ans: 2
+    },
+    {
+        q: "২৬. পানিতে আলোর বেগ 2.25 × 10⁸ m/s এবং শূন্যস্থানে আলোর বেগ 3 × 10⁸ m/s হলে, পানির প্রতিসরণাঙ্ক (η) কত?",
+        options: ["1.33", "1.50", "1.25", "0.75"],
+        ans: 0
+    },
+    {
+        q: "২৭. একজন ব্যক্তি চশমা হিসেবে -2.5 D ক্ষমতার লেন্স ব্যবহার করেন। তার ব্যবহৃত লেন্সটির প্রকৃতি ও ফোকাস দূরত্ব কত?",
+        options: ["উত্তল, 40 cm", "অবতল, 40 cm", "অবতল, 0.4 cm", "উত্তল, 25 cm"],
+        ans: 1
+    },
+    {
+        q: "২৮. দুটি লেন্সকে একত্রে স্পর্শে রাখা হলো। একটির ক্ষমতা +5 D এবং অপরটির ক্ষমতা -3 D। এই সংযুক্ত লেন্সটির সম্মিলিত ফোকাস দূরত্ব কত?",
+        options: ["+0.5 m (50 cm)", "-0.5 m", "+0.2 m", "+2 m"],
+        ans: 0
+    },
+    {
+        q: "২৯. দীর্ঘদৃষ্টি সম্পন্ন এক ব্যক্তির স্পষ্ট দৃষ্টির ন্যূনতম দূরত্ব 75 cm। স্বাভাবিক দৃষ্টি পেতে (25 cm দূরের বস্তু দেখতে) তার কত ক্ষমতার লেন্স প্রয়োজন হবে?",
+        options: ["+2.67 D", "+1.33 D", "-2.67 D", "+4.00 D"],
+        ans: 0
+    },
+    {
+        q: "৩০. কাঁচের প্রতিসরণাঙ্ক 1.5 এবং বায়ুতে আলোর বেগ 3 × 10⁸ m/s হলে কাঁচের মধ্য দিয়ে আলোকের একটি সংকেত 300 km অতিক্রম করতে কত সময় নেবে?",
+        options: ["1.5 × 10⁻³ s", "1.0 × 10⁻³ s", "1.5 × 10⁻⁶ s", "2.0 × 10⁻³ s"],
+        ans: 0
     }
+];
 
-    // ২০ মিনিট কাউন্টডাউন টাইমার
-    let timeLeft = 20 * 60;
-    const timerInterval = setInterval(() => {
-        let minutes = Math.floor(timeLeft / 60);
-        let seconds = timeLeft % 60;
-        document.getElementById('timer').innerText = `সময় বাকি: ${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds} মিনিট`;
+const optionPrefixes = ["(ক)", "(খ)", "(গ)", "(ঘ)"];
+
+function renderQuestions() {
+    const container = document.getElementById("questions-container");
+    questionsData.forEach((qObj, index) => {
+        const card = document.createElement("div");
+        card.className = "question-card";
+        card.id = `q-card-${index}`;
+
+        let optionsHTML = "";
+        qObj.options.forEach((opt, optIndex) => {
+            optionsHTML += `
+                <label class="option-label" id="opt-label-${index}-${optIndex}">
+                    <input type="radio" name="q${index}" value="${optIndex}">
+                    <span>${optionPrefixes[optIndex]} ${opt}</span>
+                </label>
+            `;
+        });
+
+        card.innerHTML = `
+            <div class="question-title">${qObj.q}</div>
+            <div class="options-grid">${optionsHTML}</div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+let totalTime = 30 * 60;
+let timerInterval;
+
+function startTimer() {
+    const timerDisplay = document.getElementById("timer-display");
+    timerInterval = setInterval(() => {
+        let minutes = Math.floor(totalTime / 60);
+        let seconds = totalTime % 60;
         
-        if (timeLeft <= 0) {
+        minutes = minutes < 10 ? "০" + minutes : convertToBanglaDigits(minutes);
+        seconds = seconds < 10 ? "০" + seconds : convertToBanglaDigits(seconds);
+
+        timerDisplay.innerHTML = `অবশিষ্ট সময়: ${minutes}:${seconds}`;
+
+        if (totalTime <= 0) {
             clearInterval(timerInterval);
-            alert('সময় শেষ! আপনার পরীক্ষা স্বয়ংক্রিয়ভাবে জমা হয়ে গেছে।');
-            submitExam();
+            alert("আপনার ৩০ মিনিট সময় শেষ হয়ে গেছে! উত্তর অটোমেটিক সাবমিট হচ্ছে।");
+            submitQuiz(true);
         }
-        timeLeft--;
+        totalTime--;
     }, 1000);
+}
 
-    function submitExam() {
-        if(localStorage.getItem('examSubmitted')) return;
-        
-        clearInterval(timerInterval);
-        localStorage.setItem('examSubmitted', 'true');
+function convertToBanglaDigits(num) {
+    const bnDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    return num.toString().split('').map(d => bnDigits[d] || d).join('');
+}
 
-        let score = 0;
-        let totalQuestions = Object.keys(answers).length;
-
-        for (let q in answers) {
-            let selected = document.querySelector(`input[name="${q}"]:checked`);
-            let card = document.querySelector(`[data-q="${q.replace('q','')}"]`);
-            let options = card.querySelectorAll('li');
-
-            options.forEach(li => {
-                let input = li.querySelector('input');
-                if (input.value === answers[q]) {
-                    li.classList.add('correct'); // সঠিক উত্তর সবুজ করা
-                }
-            });
-
-            if (selected) {
-                if (selected.value === answers[q]) {
-                    score++;
-                } else {
-                    let parentLi = selected.parentElement.parentElement;
-                    parentLi.classList.add('incorrect'); // ভুল উত্তর লাল করা
-                }
-            }
-        }
-
-        // ফর্ম হাইড করে রেজাল্ট দেখানো
-        document.getElementById('quizBody').style.display = 'none';
-        document.getElementById('timer').style.display = 'none';
-        document.getElementById('instructionBox').style.display = 'none';
-        
-        let resultBox = document.getElementById('resultBox');
-        resultBox.style.display = 'block';
-        document.getElementById('scoreText').innerText = `আপনার প্রাপ্ত নম্বর: ${score} / ${totalQuestions}`;
-
-        // WhatsApp লিঙ্ক তৈরি
-        let message = `১০ম শ্রেণী টিউটোরিয়াল প্রস্তুতি - বিজ্ঞান (বল)\nপরীক্ষার্থী তার ফলাফল সম্পন্ন করেছে।\nপ্রাপ্ত নম্বর: ${score} / ${totalQuestions}`;
-        let encodedMessage = encodeURIComponent(message);
-        document.getElementById('whatsappBtn').href = `https://wa.me/8801622186812?text=${encodedMessage}`;
-
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    }
-
-    function showLockedScreen() {
-        clearInterval(timerInterval);
-        document.getElementById('mainContainer').innerHTML = `
-            <div class="header">
-                <h1>১০ম শ্রেণী টিউটোরিয়াল প্রস্তুতি</h1>
-                <p>বিষয়: বিজ্ঞান (বল)</p>
-            </div>
-            <div class="locked-msg">
-                ⚠️ আপনি ইতিপূর্বে একবার এই পরীক্ষায় অংশগ্রহণ করেছেন। নিয়ম অনুযায়ী এই পরীক্ষাটি আর দেওয়া সম্ভব নয়। পেইজটি লক করা রয়েছে।
+window.onload = function() {
+    if (localStorage.getItem("class10_science_quiz_submitted")) {
+        document.body.innerHTML = `
+            <div class="container" style="text-align:center; padding:50px;">
+                <h1 style="color: #e74c3c;">আপনি ইতিমধ্যেই এই পরীক্ষাটি দিয়েছেন!</h1>
+                <p style="margin-top:15px; font-size:18px;">একজন শিক্ষার্থী কেবল একবারই এই পরীক্ষায় অংশগ্রহণ করতে পারবে।</p>
             </div>
         `;
+        return;
     }
+    renderQuestions();
+    startTimer();
+};
+
+function submitQuiz(isTimeOut = false) {
+    const nameInput = document.getElementById("student-name").value.trim();
+    const rollInput = document.getElementById("student-roll").value.trim();
+
+    if (!isTimeOut && (!nameInput || !rollInput)) {
+        alert("অনুগ্রহ করে আপনার নাম এবং রোল নম্বর লিখুন!");
+        return;
+    }
+
+    clearInterval(timerInterval);
+    localStorage.setItem("class10_science_quiz_submitted", "true");
+
+    let score = 0;
+    questionsData.forEach((qObj, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        const inputs = document.querySelectorAll(`input[name="q${index}"]`);
+        inputs.forEach(input => input.disabled = true);
+
+        if (selected) {
+            const userAns = parseInt(selected.value);
+            if (userAns === qObj.ans) {
+                score++;
+                document.getElementById(`opt-label-${index}-${userAns}`).classList.add("correct-opt");
+            } else {
+                document.getElementById(`opt-label-${index}-${userAns}`).classList.add("wrong-opt");
+                document.getElementById(`opt-label-${index}-${qObj.ans}`).classList.add("correct-opt");
+            }
+        } else {
+            document.getElementById(`opt-label-${index}-${qObj.ans}`).classList.add("correct-opt");
+        }
+    });
+
+    document.getElementById("submit-btn").style.display = "none";
+    document.getElementById("timer-display").style.display = "none";
+
+    const resultSection = document.getElementById("result-section");
+    resultSection.style.display = "block";
+
+    document.getElementById("student-details").innerText = `শিক্ষার্থী: ${nameInput || 'অজ্ঞাত'} | রোল: ${rollInput || 'N/A'}`;
+    document.getElementById("score-text").innerText = `প্রাপ্ত নম্বর: ${convertToBanglaDigits(score)} / ৩০`;
+    
+    let timeSpentSeconds = (30 * 60) - totalTime;
+    let spentMin = Math.floor(timeSpentSeconds / 60);
+    let spentSec = timeSpentSeconds % 60;
+    document.getElementById("time-taken-text").innerText = `সময় লেগেছে: ${convertToBanglaDigits(spentMin)} মিনিট ${convertToBanglaDigits(spentSec)} সেকেন্ড`;
+
+    const waNumber = "8801622186812";
+    const msg = `১০ম শ্রেণী টিউটোরিয়াল প্রস্তুতি (বিজ্ঞান - দেখতে হলে আলো চাই)\n` +
+                `নাম: ${nameInput}\n` +
+                `রোল: ${rollInput}\n` +
+                `প্রাপ্ত নম্বর: ${score}/৩০`;
+    
+    const waUrl = `https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(msg)}`;
+    document.getElementById("wa-share-link").href = waUrl;
+
+    resultSection.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 
 </body>
