@@ -19,7 +19,7 @@
             background-color: #f4f7f6;
             -webkit-print-color-adjust: exact;
         }
-        
+
         /* কন্ট্রোল বা ইনপুট প্যানেল স্টাইল */
         .control-panel {
             background: #ffffff;
@@ -148,7 +148,7 @@
         .exam-time-box div {
             margin-bottom: 1px;
         }
-        
+
         .title-wrapper {
             display: flex;
             align-items: center;
@@ -277,12 +277,8 @@
 </head>
 <body>
 
-    <!-- কন্ট্রোল প্যানেল -->
+    <!-- কন্ট্রোল প্যানেল (প্রতিষ্ঠানের নাম ফিল্ড বাদ দেওয়া হয়েছে) -->
     <div class="control-panel" id="inputPanel">
-        <div class="control-group">
-            <label for="institutionInput">প্রতিষ্ঠানের নাম</label>
-            <input type="text" id="institutionInput" value="ইবনে তাইমিয়া স্কুল এন্ড কলেজ">
-        </div>
         <div class="control-group">
             <label for="examTitleInput">পরীক্ষার নাম</label>
             <input type="text" id="examTitleInput" value="দ্বিতীয় শ্রেণি অভীক্ষা-২০২৬ খ্রিঃ">
@@ -369,13 +365,12 @@
                         document.write(`<tr>`);
                         document.write(`<td>${toBn(i + 1)}.</td>`);
                         document.write(`<td class="name-col">${name}</td>`);
-                        
+
                         for (let j = 0; j < 18; j++) {
-                            // প্রতিটি বারের ৩য় কলাম অর্থাৎ ইনডেক্স ২, ৫, ৮, ১১, ১৪, ১৭ এর পরে গাঢ় বর্ডার ক্লাস (day-end) যুক্ত করা হলো
                             let isDayEndClass = ((j + 1) % 3 === 0) ? 'day-end' : '';
                             document.write(`<td class="${isDayEndClass}"><input type="checkbox" class="duty-checkbox" onchange="calculateTotals()"></td>`);
                         }
-                        
+
                         document.write(`<td class="total-cell" id="row-total-${i}">০</td>`);
                         document.write(`</tr>`);
                     });
@@ -424,7 +419,7 @@
             const tbodyRows = document.querySelectorAll("#rosterTable tbody tr");
             let grandTotalCount = 0;
             let colSums = new Array(18).fill(0);
-            
+
             const teacherRowsCount = tbodyRows.length - 1;
 
             for (let i = 0; i < teacherRowsCount; i++) {
@@ -457,19 +452,19 @@
         }
 
         function generatePDFCard() {
-            const inst = document.getElementById("institutionInput").value;
             const exam = document.getElementById("examTitleInput").value;
             const timeText = document.getElementById("examTimeInput").value;
-            
-            document.getElementById("displayInstitution").innerText = inst;
+
+            // প্রতিষ্ঠানের নাম ফিক্সড রাখা হয়েছে
+            document.getElementById("displayInstitution").innerText = "ইবনে তাইমিয়া স্কুল এন্ড কলেজ";
             document.getElementById("displayExamTitle").innerText = exam;
-            
+
             const timeLines = timeText.split('|').map(line => `<div>${line.trim()}</div>`).join('');
             document.getElementById("displayExamTime").innerHTML = timeLines;
 
             const pdfCard = document.getElementById("pdfCard");
             pdfCard.style.display = "block";
-            
+
             pdfCard.scrollIntoView({ behavior: 'smooth' });
         }
 
