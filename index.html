@@ -123,7 +123,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* প্রিন্ট বা মূল ডকুমেন্ট এরিয়া (এক পেজে রাখার জন্য সাইজ অপ্টিমাইজড) */
+        /* প্রিন্ট বা মূল ডকুমেন্ট এরিয়া */
         .printable-area {
             background: #ffffff;
             padding: 2px;
@@ -185,7 +185,6 @@
             font-size: 8.5px;
         }
 
-        /* টেবিলের জন্য স্ক্রোলার ও বার আলাদা করার গাঢ় বর্ডার */
         .table-container {
             width: 100%;
             overflow-x: auto;
@@ -217,7 +216,6 @@
             font-weight: bold;
         }
 
-        /* প্রতিটি বারের (রবিবার, সোমবার ইত্যাদি) ৩য় শিফটের কলামের ডানপাশ এবং হেডার আলাদা করতে গাঢ় বর্ডার */
         .day-end {
             border-right: 2.5px solid #000 !important;
         }
@@ -277,7 +275,7 @@
 </head>
 <body>
 
-    <!-- কন্ট্রোল প্যানেল (প্রতিষ্ঠানের নাম ফিল্ড বাদ দেওয়া হয়েছে) -->
+    <!-- কন্ট্রোল প্যানেল -->
     <div class="control-panel" id="inputPanel">
         <div class="control-group">
             <label for="examTitleInput">পরীক্ষার নাম</label>
@@ -455,8 +453,7 @@
             const exam = document.getElementById("examTitleInput").value;
             const timeText = document.getElementById("examTimeInput").value;
 
-            // প্রতিষ্ঠানের নাম ফিক্সড রাখা হয়েছে
-            document.getElementById("displayInstitution").innerText = "ইবনে তাইমিয়া স্কুল এন্ড কলেজ";
+            // প্রতিষ্ঠানের নাম পরিবর্তন করা হয়নি, তাই এটি অপরিবর্তিত থাকবে
             document.getElementById("displayExamTitle").innerText = exam;
 
             const timeLines = timeText.split('|').map(line => `<div>${line.trim()}</div>`).join('');
