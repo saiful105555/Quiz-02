@@ -453,7 +453,6 @@
             const exam = document.getElementById("examTitleInput").value;
             const timeText = document.getElementById("examTimeInput").value;
 
-            // প্রতিষ্ঠানের নাম পরিবর্তন করা হয়নি, তাই এটি অপরিবর্তিত থাকবে
             document.getElementById("displayExamTitle").innerText = exam;
 
             const timeLines = timeText.split('|').map(line => `<div>${line.trim()}</div>`).join('');
