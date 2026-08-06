@@ -8,17 +8,128 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 3mm;
+            margin: 5mm;
         }
         body {
             font-family: 'Noto Sans Bengali', 'SolaimanLipi', Arial, sans-serif;
             margin: 0;
-            padding: 2px;
+            padding: 5px;
             font-size: 9px;
             color: #111;
-            background-color: #ffffff;
+            background-color: #f4f7f6;
             -webkit-print-color-adjust: exact;
         }
+        
+        /* কন্ট্রোল বা ইনপুট প্যানেল স্টাইল */
+        .control-panel {
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            max-width: 900px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .control-group label {
+            font-weight: 600;
+            font-size: 11px;
+            color: #333;
+        }
+        .control-group input, .control-group textarea {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 11px;
+            outline: none;
+            transition: border-color 0.2s;
+            resize: vertical;
+        }
+        .control-group input:focus, .control-group textarea:focus {
+            border-color: #2b6cb0;
+        }
+        .submit-btn {
+            background-color: #2b6cb0;
+            color: white;
+            padding: 9px 20px;
+            font-size: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: background 0.2s;
+            align-self: flex-end;
+        }
+        .submit-btn:hover {
+            background-color: #1a497c;
+        }
+
+        /* পিডিএফ প্রিভিউ মডাল বা কার্ড */
+        .pdf-preview-card {
+            display: none;
+            background: #ffffff;
+            border: 3px solid #2b6cb0;
+            padding: 25px;
+            border-radius: 10px;
+            width: 95%;
+            max-width: 1100px;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .pdf-preview-card h4 {
+            margin: 0 0 6px 0;
+            color: #2b6cb0;
+            font-size: 16px;
+        }
+        .download-action-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 25px;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(40,167,69,0.35);
+            transition: background 0.2s;
+            margin-top: 12px;
+        }
+        .download-action-btn:hover {
+            background-color: #218838;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* প্রিন্ট বা মূল ডকুমেন্ট এরিয়া */
+        .printable-area {
+            background: #ffffff;
+            padding: 10px;
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
         .header-container {
             display: flex;
             justify-content: space-between;
@@ -27,7 +138,7 @@
         }
         .exam-time-box {
             border: 1px solid #000;
-            padding: 2px 5px;
+            padding: 3px 6px;
             font-size: 8.5px;
             width: 165px;
             background-color: #f9f9f9;
@@ -51,7 +162,7 @@
             margin: 0;
             font-size: 9.5px;
         }
-        
+
         .table-container {
             width: 100%;
             overflow-x: auto;
@@ -70,7 +181,7 @@
 
         th, td {
             border: 1px solid #000;
-            padding: 2.2px 1px; /* লম্বালম্বি সাইজ আগের থেকে ভালো রাখার জন্য সামঞ্জস্য করা হয়েছে */
+            padding: 3.5px 1px; /* পেজের খালি ভাব দূর করতে এবং ডেটা সুন্দরভাবে ছড়াতে প্যাডিং সামান্য বাড়ানো হলো */
             font-size: 9px;
             overflow: hidden;
             word-wrap: break-word;
@@ -101,7 +212,7 @@
         .footer-signatures {
             display: flex;
             justify-content: space-between;
-            margin-top: 8px;
+            margin-top: 12px;
             text-align: center;
             font-size: 9.5px;
         }
@@ -109,32 +220,24 @@
             display: flex;
             justify-content: space-between;
             font-size: 7.5px;
-            margin-top: 2px;
+            margin-top: 4px;
         }
-        .print-btn-container {
-            text-align: center;
-            margin: 10px 0;
-        }
-        .print-btn {
-            background-color: #2b6cb0;
-            color: white;
-            padding: 8px 16px;
-            font-size: 13px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: inherit;
-        }
+
         @media print {
-            .print-btn-container {
-                display: none;
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+            .control-panel, .pdf-preview-card {
+                display: none !important;
+            }
+            .printable-area {
+                padding: 0;
+                box-shadow: none;
             }
             .table-container {
                 overflow-x: visible;
                 border: 1px solid #000;
-            }
-            body {
-                padding: 0;
             }
             html, body {
                 height: 100%;
@@ -145,132 +248,160 @@
 </head>
 <body>
 
-    <div class="print-btn-container">
-        <button class="print-btn" onclick="window.print()">🖨️ প্রিন্ট / পিডিএফ করুন (Landscape)</button>
+    <!-- ফ্লেক্সিবল ও সুন্দর ইনপুট প্যানেল -->
+    <div class="control-panel" id="inputPanel">
+        <div class="control-group">
+            <label for="institutionInput">প্রতিষ্ঠানের নাম</label>
+            <input type="text" id="institutionInput" value="ইবনে তাইমিয়া স্কুল এন্ড কলেজ">
+        </div>
+        <div class="control-group">
+            <label for="examTitleInput">পরীক্ষার নাম</label>
+            <input type="text" id="examTitleInput" value="দ্বিতীয় শ্রেণি অভীক্ষা-২০২৬ খ্রিঃ">
+        </div>
+        <div class="control-group">
+            <label for="examTimeInput">পরীক্ষার সময়সূচি</label>
+            <textarea id="examTimeInput" rows="3">সকাল : ৮.০০-১০.০০টা
+দুপুর : ১১.০০টা-১.০০টা
+বিকাল : ২.৩০-৪.৩০টা</textarea>
+        </div>
+        <button type="button" class="submit-btn" onclick="generatePDFCard()">জেনারেট পিডিএফ</button>
     </div>
 
-    <div class="header-container">
-        <div class="exam-time-box">
-            <div><strong>পরীক্ষার সময় :-</strong></div>
-            <div>সকাল : ৮.০০-১০.০০টা</div>
-            <div>দুপুর : ১১.০০টা-১.০০টা</div>
-            <div>বিকাল : ২.৩০-৪.৩০টা</div>
+    <div class="printable-area">
+        <div class="header-container">
+            <div class="exam-time-box">
+                <div><strong>পরীক্ষার সময় :-</strong></div>
+                <div id="displayExamTime">
+                    <div>সকাল : ৮.০০-১০.০০টা</div>
+                    <div>দুপুর : ১১.০০টা-১.০০টা</div>
+                    <div>বিকাল : ২.৩০-৪.৩০টা</div>
+                </div>
+            </div>
+            <div class="main-title">
+                <h2 id="displayInstitution">ইবনে তাইমিয়া স্কুল এন্ড কলেজ</h2>
+                <h3 id="displayExamTitle">দ্বিতীয় শ্রেণি অভীক্ষা-২০২৬ খ্রিঃ</h3>
+                <h4>ডিউটি রোস্টার</h4>
+            </div>
         </div>
-        <div class="main-title">
-            <h2>ইবনে তাইমিয়া স্কুল এন্ড কলেজ</h2>
-            <h3>দ্বিতীয় শ্রেণি অভীক্ষা-২০২৬ খ্রিঃ</h3>
-            <h4>ডিউটি রোস্টার</h4>
-        </div>
-    </div>
 
-    <form id="rosterForm">
-    <div class="table-container">
-    <table id="rosterTable">
-        <thead>
-            <tr>
-                <th rowspan="2" style="width: 30px;">ক্রঃ নং</th>
-                <th rowspan="2" style="width: 135px;">পর্যবেক্ষকদের নাম</th>
-                <th colspan="3">০৯/০৮/২০২৬<br>রবিবার</th>
-                <th colspan="3">১০/০৮/২০২৬<br>সোমবার</th>
-                <th colspan="3">১১/০৮/২০২৬<br>মঙ্গলবার</th>
-                <th colspan="3">১৩/০৮/২০২৬<br>বৃহস্পতিবার</th>
-                <th colspan="3">১৬/০৮/২০২৬<br>রবিবার</th>
-                <th colspan="3">১৭/০৮/২০২৬<br>সোমবার</th>
-                <th rowspan="2" style="width: 35px;">মোট</th>
-            </tr>
-            <tr>
-                <th>১ম</th><th>২য়</th><th>৩য়</th>
-                <th>১ম</th><th>২য়</th><th>৩য়</th>
-                <th>১ম</th><th>২য়</th><th>৩য়</th>
-                <th>১ম</th><th>২য়</th><th>৩য়</th>
-                <th>১ম</th><th>২য়</th><th>৩য়</th>
-                <th>১ম</th><th>২য়</th><th>৩য়</th>
-            </tr>
-        </thead>
-        <tbody>
-            <script>
-                const teachers = [
-                    "জনাব এ.এম.আখতার হোসেন", "মোঃ সিরাজুল ইসলাম খান", "মোঃ গোলাম আযম", 
-                    "কবির আহমেদ", "মুঃ নূর নবী", "হেদায়েত উল্লাহ সবুজ", 
-                    "আবুল বাশার চৌধুরী", "মাও. কামাল উদ্দিন", "মোঃ শাহাদাত হোসাইন", 
-                    "আলমগীর হোসেন", "মহসিন আল মামুন", "মোঃ হোসাইন", 
-                    "মোঃ কাউছার হাবিব", "তোফায়েল আহমেদ খন্দ", "মোঃ শাহিন আলম", 
-                    "মমিনুর রহমান", "জাকারিয়া হাবীব", "সাইফুল ইসলাম", 
-                    "সাইফুল ইসলাম", "মোঃ ইকবাল তনিম", "মোস্তাফিজুর রহমান", 
-                    "নাছির উদ্দিন", "মোঃ মাহমুদুল হাসান", "মোঃ মনির হোসেন", "ফয়সাল বিন সাইদ"
-                ];
-
-                const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
-                function toBn(n) {
-                    return n.toString().split('').map(d => bnDigits[d] !== undefined ? bnDigits[d] : d).join('');
-                }
-
-                const defaultData = [
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                    [1,0,1, 1,0,0, 1,1,0, 1,0,0, 1,0,0, 1,1,1],
-                    [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                    [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                    [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                    [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1]
-                ];
-
-                teachers.forEach((name, i) => {
-                    document.write(`<tr>`);
-                    document.write(`<td>${toBn(i + 1)}.</td>`);
-                    document.write(`<td class="name-col">${name}</td>`);
-                    for (let j = 0; j < 18; j++) {
-                        let checked = defaultData[i][j] === 1 ? 'checked' : '';
-                        document.write(`<td><input type="checkbox" class="duty-checkbox" ${checked} onchange="calculateTotals()"></td>`);
-                    }
-                    document.write(`<td class="total-cell" id="row-total-${i}">০</td>`);
-                    document.write(`</tr>`);
-                });
-            </script>
-
-            <tr>
-                <td colspan="2" style="font-weight: bold; text-align: right;">মোট =</td>
+        <form id="rosterForm">
+        <div class="table-container">
+        <table id="rosterTable">
+            <thead>
+                <tr>
+                    <th rowspan="2" style="width: 30px;">ক্রঃ নং</th>
+                    <th rowspan="2" style="width: 135px;">পর্যবেক্ষকদের নাম</th>
+                    <th colspan="3">০৯/০৮/২০২৬<br>রবিবার</th>
+                    <th colspan="3">১০/০৮/২০২৬<br>সোমবার</th>
+                    <th colspan="3">১১/০৮/২০২৬<br>মঙ্গলবার</th>
+                    <th colspan="3">১৩/০৮/২০২৬<br>বৃহস্পতিবার</th>
+                    <th colspan="3">১৬/০৮/২০২৬<br>রবিবার</th>
+                    <th colspan="3">১৭/০৮/২০২৬<br>সোমবার</th>
+                    <th rowspan="2" style="width: 35px;">মোট</th>
+                </tr>
+                <tr>
+                    <th>১ম</th><th>২য়</th><th>৩য়</th>
+                    <th>১ম</th><th>২য়</th><th>৩য়</th>
+                    <th>১ম</th><th>২য়</th><th>৩য়</th>
+                    <th>১ম</th><th>২য়</th><th>৩য়</th>
+                    <th>১ম</th><th>২য়</th><th>৩য়</th>
+                    <th>১ম</th><th>২য়</th><th>৩য়</th>
+                </tr>
+            </thead>
+            <tbody>
                 <script>
-                    for (let j = 0; j < 18; j++) {
-                        document.write(`<td class="col-total" id="col-total-${j}">০</td>`);
+                    const teachers = [
+                        "জনাব এ.এম.আখতার হোসেন", "মোঃ সিরাজুল ইসলাম খান", "মোঃ গোলাম আযম", 
+                        "কবির আহমেদ", "মুঃ নূর নবী", "হেদায়েত উল্লাহ সবুজ", 
+                        "আবুল বাশার চৌধুরী", "মাও. কামাল উদ্দিন", "মোঃ শাহাদাত হোসাইন", 
+                        "আলমগীর হোসেন", "মহসিন আল মামুন", "মোঃ হোসাইন", 
+                        "মোঃ কাউছার হাবিব", "তোফায়েল আহমেদ খন্দ", "মোঃ শাহিন আলম", 
+                        "মমিনুর রহমান", "জাকারিয়া হাবীব", "সাইফুল ইসলাম", 
+                        "সাইফুল ইসলাম", "মোঃ ইকবাল তনিম", "মোস্তাফিজুর রহমান", 
+                        "নাছির উদ্দিন", "মোঃ মাহমুদুল হাসান", "মোঃ মনির হোসেন", "ফয়সাল বিন সাইদ"
+                    ];
+
+                    const bnDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+                    function toBn(n) {
+                        return n.toString().split('').map(d => bnDigits[d] !== undefined ? bnDigits[d] : d).join('');
                     }
+
+                    const defaultData = [
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
+                        [1,0,1, 1,0,0, 1,1,0, 1,0,0, 1,0,0, 1,1,1],
+                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
+                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
+                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
+                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1]
+                    ];
+
+                    teachers.forEach((name, i) => {
+                        document.write(`<tr>`);
+                        document.write(`<td>${toBn(i + 1)}.</td>`);
+                        document.write(`<td class="name-col">${name}</td>`);
+                        for (let j = 0; j < 18; j++) {
+                            let checked = defaultData[i][j] === 1 ? 'checked' : '';
+                            document.write(`<td><input type="checkbox" class="duty-checkbox" ${checked} onchange="calculateTotals()"></td>`);
+                        }
+                        document.write(`<td class="total-cell" id="row-total-${i}">০</td>`);
+                        document.write(`</tr>`);
+                    });
                 </script>
-                <td class="total-cell" id="grand-total" style="background-color: #e2e8f0;">০</td>
-            </tr>
-        </tbody>
-    </table>
-    </div>
-    </form>
 
-    <div class="footer-signatures">
-        <div></div>
-        <div>
-            <div>পরীক্ষা নিয়ন্ত্রক</div>
+                <tr>
+                    <td colspan="2" style="font-weight: bold; text-align: right;">মোট =</td>
+                    <script>
+                        for (let j = 0; j < 18; j++) {
+                            document.write(`<td class="col-total" id="col-total-${j}">০</td>`);
+                        }
+                    </script>
+                    <td class="total-cell" id="grand-total" style="background-color: #e2e8f0;">০</td>
+                </tr>
+            </tbody>
+        </table>
         </div>
-        <div></div>
+        </form>
+
+        <div class="footer-signatures">
+            <div></div>
+            <div>
+                <div>পরীক্ষা নিয়ন্ত্রক</div>
+            </div>
+            <div></div>
+        </div>
+
+        <div class="footer-meta">
+            <div>H:\\MAHBOB\\EXAMINATION\\EXAMI ROSTER\\D. ROSTER 1</div>
+            <div>4-Aug-26</div>
+        </div>
     </div>
 
-    <div class="footer-meta">
-        <div>H:\\MAHBOB\\EXAMINATION\\EXAMI ROSTER\\D. ROSTER 1</div>
-        <div>4-Aug-26</div>
+    <!-- সাবমিটের পর নিচে ভেসে ওঠা বড় এবং লম্বা প্রিভিউ ও ডাউনলোড কার্ড -->
+    <div class="pdf-preview-card" id="pdfCard">
+        <h4>📄 আপনার ডিউটি রোস্টার সম্পূর্ণ প্রস্তুত!</h4>
+        <p style="font-size: 12px; color: #555; margin: 4px 0 15px 0;">নিচের বাটনে ক্লিক করে সরাসরি প্রিন্ট বা পিডিএফ ডাউনলোড করুন।</p>
+        <button class="download-action-btn" onclick="window.print()">
+            📥 প্রিন্ট / পিডিএফ ডাউনলোড করুন
+        </button>
     </div>
 
     <script>
@@ -297,6 +428,23 @@
             }
 
             document.getElementById("grand-total").innerText = toBn(grandTotalCount);
+        }
+
+        function generatePDFCard() {
+            const inst = document.getElementById("institutionInput").value;
+            const exam = document.getElementById("examTitleInput").value;
+            const timeText = document.getElementById("examTimeInput").value;
+            
+            document.getElementById("displayInstitution").innerText = inst;
+            document.getElementById("displayExamTitle").innerText = exam;
+            
+            const timeLines = timeText.split('\n').map(line => `<div>${line}</div>`).join('');
+            document.getElementById("displayExamTime").innerHTML = timeLines;
+
+            const pdfCard = document.getElementById("pdfCard");
+            pdfCard.style.display = "block";
+            
+            pdfCard.scrollIntoView({ behavior: 'smooth' });
         }
 
         window.onload = calculateTotals;
