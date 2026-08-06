@@ -8,13 +8,13 @@
     <style>
         @page {
             size: A4 landscape;
-            margin: 5mm;
+            margin: 4mm;
         }
         body {
             font-family: 'Noto Sans Bengali', 'SolaimanLipi', Arial, sans-serif;
             margin: 0;
             padding: 5px;
-            font-size: 9px;
+            font-size: 8.5px;
             color: #111;
             background-color: #f4f7f6;
             -webkit-print-color-adjust: exact;
@@ -23,11 +23,11 @@
         /* কন্ট্রোল বা ইনপুট প্যানেল স্টাইল */
         .control-panel {
             background: #ffffff;
-            padding: 15px 20px;
+            padding: 12px 15px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            max-width: 900px;
-            margin: 0 auto 20px auto;
+            max-width: 1000px;
+            margin: 0 auto 15px auto;
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
@@ -37,24 +37,26 @@
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             flex: 1;
-            min-width: 200px;
+            min-width: 280px;
         }
         .control-group label {
             font-weight: 600;
-            font-size: 11px;
+            font-size: 10px;
             color: #333;
         }
         .control-group input, .control-group textarea {
-            padding: 8px 12px;
+            padding: 6px 10px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 4px;
             font-family: inherit;
-            font-size: 11px;
+            font-size: 10px;
             outline: none;
             transition: border-color 0.2s;
             resize: vertical;
+            width: 100%;
+            box-sizing: border-box;
         }
         .control-group input:focus, .control-group textarea:focus {
             border-color: #2b6cb0;
@@ -62,10 +64,10 @@
         .submit-btn {
             background-color: #2b6cb0;
             color: white;
-            padding: 9px 20px;
-            font-size: 12px;
+            padding: 8px 18px;
+            font-size: 11px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             font-family: inherit;
             font-weight: 600;
@@ -81,36 +83,36 @@
             display: none;
             background: #ffffff;
             border: 3px solid #2b6cb0;
-            padding: 25px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 8px;
             width: 95%;
             max-width: 1100px;
-            margin: 20px auto;
+            margin: 15px auto;
             text-align: center;
             box-shadow: 0 6px 25px rgba(0,0,0,0.15);
             animation: fadeIn 0.4s ease-in-out;
         }
         .pdf-preview-card h4 {
-            margin: 0 0 6px 0;
+            margin: 0 0 5px 0;
             color: #2b6cb0;
-            font-size: 16px;
+            font-size: 15px;
         }
         .download-action-btn {
             background-color: #28a745;
             color: white;
-            padding: 10px 25px;
-            font-size: 14px;
+            padding: 8px 20px;
+            font-size: 13px;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             font-family: inherit;
             font-weight: bold;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             box-shadow: 0 3px 8px rgba(40,167,69,0.35);
             transition: background 0.2s;
-            margin-top: 12px;
+            margin-top: 10px;
         }
         .download-action-btn:hover {
             background-color: #218838;
@@ -124,50 +126,72 @@
         /* প্রিন্ট বা মূল ডকুমেন্ট এরিয়া */
         .printable-area {
             background: #ffffff;
-            padding: 10px;
+            padding: 5px;
             max-width: 1100px;
             margin: 0 auto;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
         .header-container {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 3px;
         }
         .exam-time-box {
             border: 1px solid #000;
-            padding: 3px 6px;
-            font-size: 8.5px;
-            width: 165px;
+            padding: 2px 5px;
+            font-size: 8px;
+            width: 155px;
             background-color: #f9f9f9;
         }
         .exam-time-box div {
             margin-bottom: 1px;
         }
+        
+        /* টাইটেলের বামপাশে লোগো এবং টাইটেল লেআউট */
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-grow: 1;
+        }
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-box img {
+            max-width: 40px;
+            max-height: 40px;
+            object-fit: contain;
+        }
+
         .main-title {
             text-align: center;
-            flex-grow: 1;
         }
         .main-title h2 {
             margin: 0 0 1px 0;
-            font-size: 14px;
+            font-size: 13px;
         }
         .main-title h3 {
             margin: 0 0 1px 0;
-            font-size: 11px;
+            font-size: 10.5px;
         }
         .main-title h4 {
             margin: 0;
-            font-size: 9.5px;
+            font-size: 9px;
         }
 
+        /* টেবিলের জন্য স্ক্রোলার বা হরাইজন্টাল ওভারফ্লো যুক্ত করা হলো */
         .table-container {
             width: 100%;
             overflow-x: auto;
             border: 1px solid #000;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -176,51 +200,52 @@
             border-collapse: collapse;
             text-align: center;
             table-layout: fixed;
-            min-width: 900px; 
+            min-width: 900px;
         }
 
         th, td {
             border: 1px solid #000;
-            padding: 3.5px 1px; /* পেজের খালি ভাব দূর করতে এবং ডেটা সুন্দরভাবে ছড়াতে প্যাডিং সামান্য বাড়ানো হলো */
-            font-size: 9px;
+            padding: 2px 1px;
+            font-size: 8.5px;
             overflow: hidden;
             word-wrap: break-word;
+            line-height: 1.1;
         }
 
         th {
             background-color: #f2f2f2;
-            font-size: 8.5px;
+            font-size: 8px;
         }
 
         .name-col {
             text-align: left;
-            padding-left: 4px;
+            padding-left: 3px;
             white-space: nowrap;
             text-overflow: ellipsis;
-            font-size: 9px;
+            font-size: 8.5px;
         }
         input[type="checkbox"] {
-            transform: scale(0.9);
+            transform: scale(0.85);
             cursor: pointer;
             margin: 0;
         }
         .total-cell, .col-total {
             font-weight: bold;
             background-color: #f9f9f9;
-            font-size: 9px;
+            font-size: 8.5px;
         }
         .footer-signatures {
             display: flex;
             justify-content: space-between;
-            margin-top: 12px;
+            margin-top: 8px;
             text-align: center;
-            font-size: 9.5px;
+            font-size: 9px;
         }
         .footer-meta {
             display: flex;
             justify-content: space-between;
-            font-size: 7.5px;
-            margin-top: 4px;
+            font-size: 7px;
+            margin-top: 3px;
         }
 
         @media print {
@@ -241,14 +266,13 @@
             }
             html, body {
                 height: 100%;
-                overflow: hidden;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ফ্লেক্সিবল ও সুন্দর ইনপুট প্যানেল -->
+    <!-- কন্ট্রোল প্যানেল -->
     <div class="control-panel" id="inputPanel">
         <div class="control-group">
             <label for="institutionInput">প্রতিষ্ঠানের নাম</label>
@@ -258,11 +282,9 @@
             <label for="examTitleInput">পরীক্ষার নাম</label>
             <input type="text" id="examTitleInput" value="দ্বিতীয় শ্রেণি অভীক্ষা-২০২৬ খ্রিঃ">
         </div>
-        <div class="control-group">
+        <div class="control-group" style="flex-basis: 100%;">
             <label for="examTimeInput">পরীক্ষার সময়সূচি</label>
-            <textarea id="examTimeInput" rows="3">সকাল : ৮.০০-১০.০০টা
-দুপুর : ১১.০০টা-১.০০টা
-বিকাল : ২.৩০-৪.৩০টা</textarea>
+            <textarea id="examTimeInput" rows="2">সকাল : ৮.০০-১০.০০টা | দুপুর : ১১.০০টা-১.০০টা | বিকাল : ২.৩০-৪.৩০টা</textarea>
         </div>
         <button type="button" class="submit-btn" onclick="generatePDFCard()">জেনারেট পিডিএফ</button>
     </div>
@@ -277,11 +299,17 @@
                     <div>বিকাল : ২.৩০-৪.৩০টা</div>
                 </div>
             </div>
-            <div class="main-title">
-                <h2 id="displayInstitution">ইবনে তাইমিয়া স্কুল এন্ড কলেজ</h2>
-                <h3 id="displayExamTitle">দ্বিতীয় শ্রেণি অভীক্ষা-২০২৬ খ্রিঃ</h3>
-                <h4>ডিউটি রোস্টার</h4>
+            <div class="title-wrapper">
+                <div class="logo-box">
+                    <img id="displayLogo" src="https://lh3.googleusercontent.com/d/15W9KPuuMR2OPfe0sELc2clmqWxIC8JGR" alt="Logo">
+                </div>
+                <div class="main-title">
+                    <h2 id="displayInstitution">ইবনে তাইমিয়া স্কুল এন্ড কলেজ</h2>
+                    <h3 id="displayExamTitle">দ্বিতীয় শ্রেণি অভীক্ষা-২০২৬ খ্রিঃ</h3>
+                    <h4>ডিউটি রোস্টার</h4>
+                </div>
             </div>
+            <div style="width: 155px;"></div>
         </div>
 
         <form id="rosterForm">
@@ -289,15 +317,15 @@
         <table id="rosterTable">
             <thead>
                 <tr>
-                    <th rowspan="2" style="width: 30px;">ক্রঃ নং</th>
-                    <th rowspan="2" style="width: 135px;">পর্যবেক্ষকদের নাম</th>
+                    <th rowspan="2" style="width: 28px;">ক্রঃ নং</th>
+                    <th rowspan="2" style="width: 130px;">পর্যবেক্ষকদের নাম</th>
                     <th colspan="3">০৯/০৮/২০২৬<br>রবিবার</th>
                     <th colspan="3">১০/০৮/২০২৬<br>সোমবার</th>
                     <th colspan="3">১১/০৮/২০২৬<br>মঙ্গলবার</th>
                     <th colspan="3">১৩/০৮/২০২৬<br>বৃহস্পতিবার</th>
                     <th colspan="3">১৬/০৮/২০২৬<br>রবিবার</th>
                     <th colspan="3">১৭/০৮/২০২৬<br>সোমবার</th>
-                    <th rowspan="2" style="width: 35px;">মোট</th>
+                    <th rowspan="2" style="width: 32px;">মোট</th>
                 </tr>
                 <tr>
                     <th>১ম</th><th>২য়</th><th>৩য়</th>
@@ -326,41 +354,12 @@
                         return n.toString().split('').map(d => bnDigits[d] !== undefined ? bnDigits[d] : d).join('');
                     }
 
-                    const defaultData = [
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                        [1,0,1, 1,0,0, 1,1,0, 1,0,0, 1,0,0, 1,1,1],
-                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,1,0, 1,1,0, 1,1,0, 1,0,0, 1,1,1, 1,1,0],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1],
-                        [1,0,1, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,1],
-                        [1,0,1, 1,1,1, 1,1,0, 1,1,0, 1,1,0, 1,0,1]
-                    ];
-
                     teachers.forEach((name, i) => {
                         document.write(`<tr>`);
                         document.write(`<td>${toBn(i + 1)}.</td>`);
                         document.write(`<td class="name-col">${name}</td>`);
                         for (let j = 0; j < 18; j++) {
-                            let checked = defaultData[i][j] === 1 ? 'checked' : '';
-                            document.write(`<td><input type="checkbox" class="duty-checkbox" ${checked} onchange="calculateTotals()"></td>`);
+                            document.write(`<td><input type="checkbox" class="duty-checkbox" onchange="calculateTotals()"></td>`);
                         }
                         document.write(`<td class="total-cell" id="row-total-${i}">০</td>`);
                         document.write(`</tr>`);
@@ -395,7 +394,7 @@
         </div>
     </div>
 
-    <!-- সাবমিটের পর নিচে ভেসে ওঠা বড় এবং লম্বা প্রিভিউ ও ডাউনলোড কার্ড -->
+    <!-- পিডিএফ প্রিভিউ ও ডাউনলোড কার্ড -->
     <div class="pdf-preview-card" id="pdfCard">
         <h4>📄 আপনার ডিউটি রোস্টার সম্পূর্ণ প্রস্তুত!</h4>
         <p style="font-size: 12px; color: #555; margin: 4px 0 15px 0;">নিচের বাটনে ক্লিক করে সরাসরি প্রিন্ট বা পিডিএফ ডাউনলোড করুন।</p>
@@ -406,12 +405,14 @@
 
     <script>
         function calculateTotals() {
-            const rows = document.querySelectorAll("#rosterTable tbody tr");
+            const tbodyRows = document.querySelectorAll("#rosterTable tbody tr");
             let grandTotalCount = 0;
             let colSums = new Array(18).fill(0);
+            
+            const teacherRowsCount = tbodyRows.length - 1;
 
-            for (let i = 0; i < 25; i++) {
-                const checkboxes = rows[i].querySelectorAll(".duty-checkbox");
+            for (let i = 0; i < teacherRowsCount; i++) {
+                const checkboxes = tbodyRows[i].querySelectorAll(".duty-checkbox");
                 let rowCount = 0;
                 checkboxes.forEach((cb, j) => {
                     if (cb.checked) {
@@ -419,15 +420,24 @@
                         colSums[j]++;
                     }
                 });
-                document.getElementById(`row-total-${i}`).innerText = toBn(rowCount);
+                const totalCell = document.getElementById(`row-total-${i}`);
+                if (totalCell) {
+                    totalCell.innerText = toBn(rowCount);
+                }
                 grandTotalCount += rowCount;
             }
 
             for (let j = 0; j < 18; j++) {
-                document.getElementById(`col-total-${j}`).innerText = toBn(colSums[j]);
+                const colTotalCell = document.getElementById(`col-total-${j}`);
+                if (colTotalCell) {
+                    colTotalCell.innerText = toBn(colSums[j]);
+                }
             }
 
-            document.getElementById("grand-total").innerText = toBn(grandTotalCount);
+            const grandTotalCell = document.getElementById("grand-total");
+            if (grandTotalCell) {
+                grandTotalCell.innerText = toBn(grandTotalCount);
+            }
         }
 
         function generatePDFCard() {
@@ -438,7 +448,7 @@
             document.getElementById("displayInstitution").innerText = inst;
             document.getElementById("displayExamTitle").innerText = exam;
             
-            const timeLines = timeText.split('\n').map(line => `<div>${line}</div>`).join('');
+            const timeLines = timeText.split('|').map(line => `<div>${line.trim()}</div>`).join('');
             document.getElementById("displayExamTime").innerHTML = timeLines;
 
             const pdfCard = document.getElementById("pdfCard");
