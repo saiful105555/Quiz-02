@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>স্মার্ট শিক্ষক তালিকা - ইবনে তাইমিয়া স্কুল এন্ড কলেজ</title>
+    
+    <!-- গুগল বাংলা ফন্ট যুক্ত করা হয়েছে -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* বেসিক এবং ফন্ট স্টাইলিং */
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            margin: 0;
+            padding: 30px 15px;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* মূল কন্টেইনার (গ্লাস ইফেক্ট ও শ্যাডো) */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* হেডার সেকশন */
+        .header-section {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .header-section h1 {
+            color: #1a5276;
+            font-size: 34px;
+            margin: 0 0 5px 0;
+            font-weight: 700;
+        }
+
+        .header-section p {
+            color: #616a6b;
+            font-size: 18px;
+            margin: 5px 0;
+            font-weight: 500;
+        }
+
+        /* সার্চ বার স্টাইলিং */
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-family: 'Hind Siliguri', sans-serif;
+            border: 2px solid #d5d8dc;
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .search-box input:focus {
+            border-color: #2980b9;
+            box-shadow: 0 0 10px rgba(41, 128, 185, 0.2);
+        }
+
+        .total-teachers {
+            background: #eaf2f8;
+            color: #2980b9;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        /* টেবিল স্টাইলিং */
+        .table-wrapper {
+            max-height: 600px; /* স্ক্রলিং এর জন্য */
+            overflow-y: auto;
+            border-radius: 10px;
+            border: 1px solid #e0e6ed;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
+        }
+
+        /* কাস্টম স্ক্রলবার */
+        .table-wrapper::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #bdc3c7;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        /* স্টিকি হেডার (স্ক্রল করলেও উপরে থাকবে) */
+        th {
+            background-color: #2980b9;
+            color: #ffffff;
+            text-align: center;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            color: #4a5568;
+        }
+
+        /* কলাম এলাইনমেন্ট */
+        td:nth-child(1), td:nth-child(5), td:nth-child(6), td:nth-child(7) {
+            text-align: center;
+        }
+
+        /* জেব্রা স্ট্রাইপ ও হোভার ইফেক্ট */
+        tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        tbody tr:hover {
+            background-color: #ebf5fb;
+            transform: scale(1.002);
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .mobile-num {
+            display: block;
+            line-height: 1.6;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        /* নো ডাটা মেসেজ */
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #e74c3c;
+            font-weight: bold;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- হেডার -->
+        <div class="header-section">
+            <h1>ইবনে তাইমিয়া স্কুল এন্ড কলেজ</h1>
+            <p>শিক্ষক তালিকা - ২০২৫ | শিফটঃ শাপলা</p>
+        </div>
+
+        <!-- সার্চ ও ফিল্টার এরিয়া -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="নাম, বিষয় বা পদবী লিখে খুঁজুন...">
+            </div>
+            <div class="total-teachers">
+                সর্বমোট শিক্ষক: ২৭ জন
+            </div>
+        </div>
+
+        <!-- টেবিল এরিয়া -->
+        <div class="table-wrapper">
+            <table id="teacherTable">
+                <thead>
+                    <tr>
+                        <th>ক্রম</th>
+                        <th>নাম</th>
+                        <th>পদবী</th>
+                        <th>বিষয়</th>
+                        <th>মোবাইল নাম্বার</th>
+                        <th>ব্লাড গ্রুপ</th>
+                        <th>যোগদানের তারিখ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>১.</td><td>জনাব কামারুজ্জামান</td><td>ইনচার্জ</td><td>অর্থনীতি</td><td>০১৭11-০০৬৯২৪</td><td>AB+</td><td>-</td></tr>
+                    <tr><td>২.</td><td>আমিনুর রহমান সোহেল</td><td>সহ. ইনচার্জ</td><td>ইসলাম শিক্ষা</td><td>০১৭১৪-৮৩৯০৭০</td><td>B+</td><td>-</td></tr>
+                    <tr><td>৩.</td><td>মো: আবদুল কাদির</td><td>প্রভাষক</td><td>গণিত</td><td><span class="mobile-num">০১৭১৮-৩২৭৬৬৬</span><span class="mobile-num">০১৯১১-৬৫২৫২৮</span></td><td>B+</td><td>-</td></tr>
+                    <tr><td>৪.</td><td>মোঃ শাহানুর রহমান</td><td>প্রভাষক</td><td>বাংলা</td><td><span class="mobile-num">০১৮৪৫-৩২২২২৬</span><span class="mobile-num">০১৪০৭-২৯৭৩৭৮</span></td><td>A+</td><td>-</td></tr>
+                    <tr><td>৫.</td><td>নুরে আলম সাথী</td><td>প্রভাষক</td><td>পদার্থ</td><td>০১৯১২-৫৯৫০৭০</td><td>B+</td><td>-</td></tr>
+                    <tr><td>৬.</td><td>আনোয়ার হোসেন</td><td>প্রভাষক</td><td>হিসাববিজ্ঞান</td><td><span class="mobile-num">০১৮৫৪-১৮০১২৬</span><span class="mobile-num">০১৭১৯-৩৫৪১৯৯</span></td><td>A+</td><td>-</td></tr>
+                    <tr><td>৭.</td><td>মোহাম্মদ কামরুল ফারুক</td><td>প্রভাষক</td><td>ইসলাম শিক্ষা</td><td><span class="mobile-num">০১৯৩২-৩৪০৬৮৪</span><span class="mobile-num">০১৮৪৬-৩৪০৬৪০</span></td><td>A+</td><td>-</td></tr>
+                    <tr><td>৮.</td><td>বাহার উদ্দিন</td><td>প্রভাষক</td><td>বাংলা</td><td>০১৮১৩-২৭০০৭৫</td><td>B+</td><td>-</td></tr>
+                    <tr><td>৯.</td><td>গোলাম মহিউদ্দিন</td><td>প্রভাষক</td><td>ব্যবস্থাপনা</td><td><span class="mobile-num">০১৩০১-৬৪৮৩৬৬</span><span class="mobile-num">০১৮১৭-৪৫৮৬৫০</span></td><td>B+</td><td>-</td></tr>
+                    <tr><td>১০.</td><td>রায়হান হোসেন</td><td>প্রভাষক</td><td>ইংরেজি</td><td>০১৮৭৫-০৩০৯৭১</td><td>A+</td><td>-</td></tr>
+                    <tr><td>১১.</td><td>জিয়াউর রহমান</td><td>প্রভাষক</td><td>চারু ও কারু</td><td>০১৭১০-৯৩৮৪১৬</td><td>B+</td><td>-</td></tr>
+                    <tr><td>১২.</td><td>মাও. আল আমিন</td><td>প্রভাষক</td><td>ইস শিক্ষা</td><td>০১৮১৮-২৫৪৭৭৭</td><td>O+</td><td>-</td></tr>
+                    <tr><td>১৩.</td><td>মাসুদুর রহমান সিদ্দিকী</td><td>প্রভাষক</td><td>অর্থনীতি</td><td>০১৭৪৭-২৯০০৫৩</td><td>AB+</td><td>-</td></tr>
+                    <tr><td>১৪.</td><td>ইসরাফিল ভূঁইয়া</td><td>প্রভাষক</td><td>ইংরেজি</td><td>০১৮৩৩-১৩৯৫৫৯</td><td>AB+</td><td>-</td></tr>
+                    <tr><td>১৫.</td><td>সাখাওয়াত হোসাইন</td><td>প্রভাষক</td><td>রসায়ন</td><td>০১৮১৩-৬৫৯৩১৩</td><td>B+</td><td>-</td></tr>
+                    <tr><td>১৬.</td><td>একিউএম জাহিদুল বারী</td><td>প্রভাষক</td><td>ইংরেজি</td><td>০১৭৩৩-৯০০০০০</td><td>O+</td><td>-</td></tr>
+                    <tr><td>১৭.</td><td>সাইফুদ্দিন মোঃ রাশেদ</td><td>প্রভাষক</td><td>জীব বিজ্ঞান</td><td>০১৯১৭-০০০৪৭০</td><td>O+</td><td>-</td></tr>
+                    <tr><td>১৮.</td><td>মোঃ মঈন উদ্দিন</td><td>প্রভাষক</td><td>বাংলা</td><td>০১৭৪৬-৭৮৭৮৩৪</td><td>B+</td><td>-</td></tr>
+                    <tr><td>১৯.</td><td>মো. জাকির হোসাইন</td><td>প্রভাষক</td><td>ইসলাম</td><td>০১৮৫১-৩২৪৩৪১</td><td>A+</td><td>-</td></tr>
+                    <tr><td>২০.</td><td>জোবায়ের হোসেন</td><td>প্রভাষক</td><td>গণিত</td><td>০১৮২০-২০৯৫০৬</td><td>O+</td><td>-</td></tr>
+                    <tr><td>২১.</td><td>গোলাম মোস্তফা</td><td>প্রভাষক</td><td>ইংরেজি</td><td>০১৮৭৯-৬৯৮৪৯৫</td><td>A+</td><td>-</td></tr>
+                    <tr><td>২২.</td><td>ওমর ফারুক</td><td>সহকারী শিক্ষক</td><td>ইংরেজি</td><td>০১৮২৩-৭৯১১১৯</td><td>A+</td><td>-</td></tr>
+                    <tr><td>২৩.</td><td>মানিক হোসেন</td><td>প্রভাষক</td><td>জীববিজ্ঞান</td><td>০১৭০৫-১৫১৬৬৫</td><td>O+</td><td>-</td></tr>
+                    <tr><td>২৪.</td><td>আশিকুর রহমান সবুজ</td><td>সহকারী শিক্ষক</td><td>শারীরিক শিক্ষা</td><td>০১৬৭২-৪০১১৪১</td><td>B+</td><td>-</td></tr>
+                    <tr><td>২৫.</td><td>ফরিদ আহমেদ</td><td>প্রভাষক</td><td>গণিত</td><td>০১৯১৯-২০৫৬৫২</td><td>AB+</td><td>-</td></tr>
+                    <tr><td>২৬.</td><td>বোরহান উদ্দিন</td><td>সহকারী শিক্ষক</td><td>গণিত</td><td>০১৬৩৭-৬১৯৩৩২</td><td>O+</td><td>-</td></tr>
+                    <tr><td>২৭.</td><td>আরমান হোসেন</td><td>সহকারী শিক্ষক</td><td>পদার্থ</td><td>০১৮১২-৫৬৩৭৮৭</td><td>-</td><td>-</td></tr>
+                </tbody>
+            </table>
+            <div id="noData" class="no-data">কোনো তথ্য পাওয়া যায়নি!</div>
+        </div>
+    </div>
+
+    <!-- লাইভ সার্চের জন্য জাভাস্ক্রিপ্ট -->
+    <script>
+        function searchTable() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let table = document.getElementById("teacherTable");
+            let tr = table.getElementsByTagName("tr");
+            let visibleCount = 0;
+
+            for (let i = 1; i < tr.length; i++) { // Header বাদে লুপ চলবে
+                let rowText = tr[i].innerText.toLowerCase();
+                if (rowText.includes(input)) {
+                    tr[i].style.display = "";
+                    visibleCount++;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+
+            // যদি সার্চে কিছু না পাওয়া যায়, তবে মেসেজ দেখাবে
+            let noData = document.getElementById("noData");
+            if (visibleCount === 0) {
+                noData.style.display = "block";
+                table.style.display = "none";
+            } else {
+                noData.style.display = "none";
+                table.style.display = "table";
+            }
+        }
+    </script>
+
+</body>
+</html>
