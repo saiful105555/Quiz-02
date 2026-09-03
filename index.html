@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>টিউশন ট্র্যাকার - সাইফুল ইসলাম</title>
+    <!-- html2pdf লাইব্রেরি যুক্ত করা হলো -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary: #4F46E5;
+            --success: #10B981;
+            --danger: #EF4444;
+            --bg: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+        }
+
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            max-width: 650px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin: 0 0 5px 0;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .dashboard {
+            display: flex;
+            justify-content: space-between;
+            background-color: #EEF2FF;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #C7D2FE;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #E5E7EB;
+            border-radius: 999px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background-color: var(--success);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="date"] {
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            font-family: inherit;
+            flex: 1;
+        }
+
+        button {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 6px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            flex: 2;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+            width: 100%;
+            margin-top: 20px;
+            display: none; /* By default hidden */
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        th {
+            background-color: #F9FAFB;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .delete-btn {
+            background-color: #FEE2E2;
+            color: var(--danger);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .complete-msg {
+            display: none;
+            background-color: #D1FAE5;
+            color: #065F46;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: 1px solid #34D399;
+        }
+
+        @media (max-width: 480px) {
+            .input-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="printableArea">
+        <header>
+            <h1>শিক্ষক: সাইফুল ইসলাম</h1>
+            <h2>টিউশন: নোয়াগ্রাম (মিথিলা + ইলমা)</h2>
+        </header>
+
+        <div id="completeMsg" class="complete-msg">
+            🎉 অভিনন্দন! এই মাসের ১৬টি ক্লাস সম্পন্ন হয়েছে।
+        </div>
+
+        <div class="dashboard">
+            <div class="stat-box">
+                <div class="stat-value" id="completedClasses">০</div>
+                <div>সম্পন্ন ক্লাস</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="remainingClasses">১৬</div>
+                <div>বাকি আছে</div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px;">
+                <span>প্রগ্রেস</span>
+                <span id="progressText">০%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="input-group no-print">
+            <input type="date" id="classDate">
+            <button class="btn-primary" onclick="addClass()">+ আজকের ক্লাস যুক্ত করুন</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ক্লাস নং</th>
+                    <th>তারিখ</th>
+                    <th>বার</th>
+                    <th class="action-cell">অ্যাকশন</th>
+                </tr>
+            </thead>
+            <tbody id="classTableBody">
+                <!-- Data will be populated here -->
+            </tbody>
+        </table>
+
+        <!-- পিডিএফ ডাউনলোড বাটন -->
+        <button id="downloadPdfBtn" class="btn-success no-print" onclick="downloadPDF()">📥 মাসিক রিপোর্ট পিডিএফ আকারে ডাউনলোড করুন</button>
+        
+        <button class="btn-danger no-print" onclick="resetMonth()">🔄 নতুন মাস শুরু করুন (রিসেট)</button>
+    </div>
+
+    <script>
+        const MAX_CLASSES = 16;
+        const storageKey = 'tuition_noagram_data';
+        
+        const engToBng = (str) => String(str).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+        
+        const daysInBengali = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
+        const monthsInBengali = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
+
+        document.getElementById('classDate').valueAsDate = new Date();
+
+        let classData = JSON.parse(localStorage.getItem(storageKey)) || [];
+
+        function formatDateInBengali(dateString) {
+            const date = new Date(dateString);
+            const day = engToBng(date.getDate());
+            const month = monthsInBengali[date.getMonth()];
+            const year = engToBng(date.getFullYear());
+            return `${day} ${month}, ${year}`;
+        }
+
+        function getDayInBengali(dateString) {
+            const date = new Date(dateString);
+            return daysInBengali[date.getDay()];
+        }
+
+        function updateUI() {
+            const tbody = document.getElementById('classTableBody');
+            tbody.innerHTML = '';
+
+            classData.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${engToBng(index + 1)}</strong></td>
+                    <td>${formatDateInBengali(item.date)}</td>
+                    <td>${getDayInBengali(item.date)}</td>
+                    <td class="action-cell"><button class="delete-btn" onclick="removeClass(${index})">মুছুন</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const completed = classData.length;
+            const remaining = MAX_CLASSES - completed > 0 ? MAX_CLASSES - completed : 0;
+            
+            document.getElementById('completedClasses').innerText = engToBng(completed);
+            document.getElementById('remainingClasses').innerText = engToBng(remaining);
+
+            const progressPercent = Math.min((completed / MAX_CLASSES) * 100, 100);
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            document.getElementById('progressText').innerText = `${engToBng(Math.round(progressPercent))}%`;
+
+            // ১৬ ক্লাস পূর্ণ হলে ম্যাসেজ দেখাবে
+            if(completed >= MAX_CLASSES) {
+                document.getElementById('completeMsg').style.display = 'block';
+            } else {
+                document.getElementById('completeMsg').style.display = 'none';
+            }
+
+            // যদি অন্তত ১টি ক্লাস থাকে, তবেই পিডিএফ ডাউনলোড বাটন দেখাবে
+            if(completed > 0) {
+                document.getElementById('downloadPdfBtn').style.display = 'block';
+            } else {
+                document.getElementById('downloadPdfBtn').style.display = 'none';
+            }
+        }
+
+        function addClass() {
+            if (classData.length >= MAX_CLASSES) {
+                alert("এই মাসের ১৬টি ক্লাস ইতিমধ্যে পূর্ণ হয়ে গেছে!");
+                return;
+            }
+
+            const dateInput = document.getElementById('classDate').value;
+            if (!dateInput) {
+                alert("দয়া করে একটি তারিখ নির্বাচন করুন!");
+                return;
+            }
+
+            const exists = classData.some(c => c.date === dateInput);
+            if(exists) {
+                if(!confirm("এই তারিখে ইতিমধ্যে একটি ক্লাস যুক্ত করা হয়েছে। আপনি কি নিশ্চিত?")) {
+                    return;
+                }
+            }
+
+            classData.push({ date: dateInput });
+            saveData();
+            updateUI();
+        }
+
+        function removeClass(index) {
+            if(confirm("আপনি কি নিশ্চিত যে এই ক্লাসটি মুছে ফেলতে চান?")) {
+                classData.splice(index, 1);
+                saveData();
+                updateUI();
+            }
+        }
+
+        function resetMonth() {
+            if(confirm("আপনি কি নিশ্চিত? এটি পূর্ববর্তী সব ক্লাসের রেকর্ড মুছে ফেলবে। পিডিএফ ডাউনলোড করে থাকলে তবেই রিসেট করুন।")) {
+                classData = [];
+                saveData();
+                updateUI();
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem(storageKey, JSON.stringify(classData));
+        }
+
+        // পিডিএফ ডাউনলোড ফাংশন
+        function downloadPDF() {
+            const element = document.getElementById('printableArea');
+            
+            // পিডিএফ এ যেসব বাটন/ইনপুট দেখাতে চাই না সেগুলো সাময়িকভাবে হাইড করা
+            const noPrintElements = document.querySelectorAll('.no-print');
+            const actionCells = document.querySelectorAll('.action-cell');
+            
+            noPrintElements.forEach(el => el.style.display = 'none');
+            actionCells.forEach(el => el.style.display = 'none');
+
+            // পিডিএফ কনফিগারেশন
+            const opt = {
+                margin:       [0.5, 0.5, 0.5, 0.5], // Top, Left, Bottom, Right
+                filename:     'Tuition_Report_Saiful_Islam.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+
+            // জেনারেট এবং ডাউনলোড
+            html2pdf().set(opt).from(element).save().then(() => {
+                // ডাউনলোড শেষে বাটনগুলো আবার আগের জায়গায় ফিরিয়ে আনা
+                noPrintElements.forEach(el => el.style.display = '');
+                actionCells.forEach(el => el.style.display = '');
+                updateUI(); // UI রিফ্রেশ করা
+            });
+        }
+
+        // Initial Load
+        updateUI();
+    </script>
+</body>
+</html>
