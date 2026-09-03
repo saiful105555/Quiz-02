@@ -136,7 +136,7 @@
             color: white;
             width: 100%;
             margin-top: 20px;
-            display: none; /* By default hidden */
+            display: none;
         }
 
         .btn-danger {
@@ -303,14 +303,12 @@
             document.getElementById('progressFill').style.width = `${progressPercent}%`;
             document.getElementById('progressText').innerText = `${engToBng(Math.round(progressPercent))}%`;
 
-            // ১৬ ক্লাস পূর্ণ হলে ম্যাসেজ দেখাবে
             if(completed >= MAX_CLASSES) {
                 document.getElementById('completeMsg').style.display = 'block';
             } else {
                 document.getElementById('completeMsg').style.display = 'none';
             }
 
-            // যদি অন্তত ১টি ক্লাস থাকে, তবেই পিডিএফ ডাউনলোড বাটন দেখাবে
             if(completed > 0) {
                 document.getElementById('downloadPdfBtn').style.display = 'block';
             } else {
@@ -319,6 +317,7 @@
         }
 
         function addClass() {
+            // ১. ১৬ ক্লাসের লিমিট চেক
             if (classData.length >= MAX_CLASSES) {
                 alert("এই মাসের ১৬টি ক্লাস ইতিমধ্যে পূর্ণ হয়ে গেছে!");
                 return;
@@ -330,19 +329,28 @@
                 return;
             }
 
+            // ২. একই দিনের এন্ট্রি চেক (নতুন ফিচার)
             const exists = classData.some(c => c.date === dateInput);
             if(exists) {
-                if(!confirm("এই তারিখে ইতিমধ্যে একটি ক্লাস যুক্ত করা হয়েছে। আপনি কি নিশ্চিত?")) {
-                    return;
-                }
+                alert("এক দিনে একটার বেশি ক্লাস যুক্ত করা যাবে না! আপনি ইতিমধ্যে এই তারিখে একটি ক্লাস যুক্ত করেছেন।");
+                return;
             }
 
+            // ৩. পাসওয়ার্ড চেক (নতুন ফিচার)
+            const password = prompt("ক্লাস যুক্ত করতে পাসওয়ার্ড দিন:");
+            if (password !== "Saiful007") {
+                alert("পাসওয়ার্ড ভুল হয়েছে! ক্লাস যুক্ত করা সম্ভব নয়।");
+                return;
+            }
+
+            // সবকিছু ঠিক থাকলে ক্লাস যুক্ত হবে
             classData.push({ date: dateInput });
             saveData();
             updateUI();
         }
 
         function removeClass(index) {
+            // ডিলিট করার সময়ও চাইলে পাসওয়ার্ড দিতে পারেন, তবে আমি শুধুমাত্র কনফার্মেশন রেখেছি
             if(confirm("আপনি কি নিশ্চিত যে এই ক্লাসটি মুছে ফেলতে চান?")) {
                 classData.splice(index, 1);
                 saveData();
@@ -362,36 +370,30 @@
             localStorage.setItem(storageKey, JSON.stringify(classData));
         }
 
-        // পিডিএফ ডাউনলোড ফাংশন
         function downloadPDF() {
             const element = document.getElementById('printableArea');
             
-            // পিডিএফ এ যেসব বাটন/ইনপুট দেখাতে চাই না সেগুলো সাময়িকভাবে হাইড করা
             const noPrintElements = document.querySelectorAll('.no-print');
             const actionCells = document.querySelectorAll('.action-cell');
             
             noPrintElements.forEach(el => el.style.display = 'none');
             actionCells.forEach(el => el.style.display = 'none');
 
-            // পিডিএফ কনফিগারেশন
             const opt = {
-                margin:       [0.5, 0.5, 0.5, 0.5], // Top, Left, Bottom, Right
+                margin:       [0.5, 0.5, 0.5, 0.5],
                 filename:     'Tuition_Report_Saiful_Islam.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2 },
                 jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
             };
 
-            // জেনারেট এবং ডাউনলোড
             html2pdf().set(opt).from(element).save().then(() => {
-                // ডাউনলোড শেষে বাটনগুলো আবার আগের জায়গায় ফিরিয়ে আনা
                 noPrintElements.forEach(el => el.style.display = '');
                 actionCells.forEach(el => el.style.display = '');
-                updateUI(); // UI রিফ্রেশ করা
+                updateUI(); 
             });
         }
 
-        // Initial Load
         updateUI();
     </script>
 </body>
