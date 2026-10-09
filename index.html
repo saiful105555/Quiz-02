@@ -4,222 +4,361 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>টিউশন ট্র্যাকার - সাইফুল ইসলাম</title>
-    <!-- html2pdf লাইব্রেরি যুক্ত করা হলো -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --primary: #4F46E5;
-            --success: #10B981;
-            --danger: #EF4444;
-            --bg: #F3F4F6;
-            --card-bg: #FFFFFF;
-            --text-main: #1F2937;
-            --text-muted: #6B7280;
+            --primary: #4338ca;
+            --primary-hover: #3730a3;
+            --success: #059669;
+            --success-hover: #047857;
+            --danger: #dc2626;
+            --danger-hover: #b91c1c;
+            --bg-main: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-dark: #111827;
+            --text-muted: #4b5563;
+            --border-color: #e5e7eb;
         }
 
         body {
-            font-family: 'Hind Siliguri', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
+            font-family: 'Hind Siliguri', 'Kalpurush', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            color: var(--text-dark);
             margin: 0;
-            padding: 20px;
+            padding: 20px 10px;
             display: flex;
             justify-content: center;
+            min-height: 100vh;
         }
 
         .container {
             background-color: var(--card-bg);
-            max-width: 650px;
+            max-width: 800px;
             width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            padding: 35px;
+            box-sizing: border-box;
         }
 
         header {
             text-align: center;
-            border-bottom: 2px solid var(--bg);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         h1 {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             color: var(--primary);
-            margin: 0 0 5px 0;
+            margin: 0 0 8px 0;
+            font-weight: 700;
         }
 
         h2 {
             font-size: 1.1rem;
             color: var(--text-muted);
             margin: 0;
+            font-weight: 500;
+        }
+
+        .badge {
+            background-color: #e0e7ff;
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
         }
 
         .dashboard {
-            display: flex;
-            justify-content: space-between;
-            background-color: #EEF2FF;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #C7D2FE;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .stat-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .stat-box.completed {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        .stat-box.remaining {
+            background: #fffbeb;
+            border-color: #fef08a;
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 5px;
         }
 
+        .stat-box.completed .stat-value { color: var(--success); }
+        .stat-box.remaining .stat-value { color: #d97706; }
+
         .progress-container {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
         .progress-bar {
             width: 100%;
-            background-color: #E5E7EB;
+            background-color: #e2e8f0;
             border-radius: 999px;
-            height: 10px;
+            height: 12px;
             overflow: hidden;
+            margin-top: 8px;
         }
 
         .progress-fill {
-            background-color: var(--success);
+            background: linear-gradient(90deg, var(--primary), #818cf8);
             height: 100%;
             width: 0%;
-            transition: width 0.3s ease;
+            transition: width 0.5s ease-in-out;
+            border-radius: 999px;
         }
 
         .input-group {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 25px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
-        input[type="date"] {
-            padding: 10px;
-            border: 1px solid #D1D5DB;
-            border-radius: 6px;
+        .input-group input, .input-group select {
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
             font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
             flex: 1;
+            min-width: 140px;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.1);
         }
 
         button {
-            padding: 12px 15px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-family: inherit;
             font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
             font-size: 1rem;
-        }
-
-        button:hover {
-            opacity: 0.9;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn-primary {
             background-color: var(--primary);
             color: white;
-            flex: 2;
+            flex: 100%;
+            box-shadow: 0 4px 6px -1px rgba(67, 56, 202, 0.2);
         }
+
+        .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
 
         .btn-success {
             background-color: var(--success);
             color: white;
             width: 100%;
-            margin-top: 20px;
-            display: none;
+            margin-top: 25px;
+            box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.2);
+        }
+        
+        .btn-success:hover { background-color: var(--success-hover); }
+
+        .btn-danger-outline {
+            background-color: transparent;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            width: 100%;
+            margin-top: 15px;
         }
 
-        .btn-danger {
-            background-color: var(--danger);
-            color: white;
-            width: 100%;
-            margin-top: 10px;
-        }
+        .btn-danger-outline:hover { background-color: #fef2f2; }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
         }
 
         th, td {
             text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #E5E7EB;
+            padding: 14px 15px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         th {
-            background-color: #F9FAFB;
+            background-color: #f8fafc;
             font-weight: 600;
             color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
         }
+
+        tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background-color: #f8fafc; }
 
         .delete-btn {
-            background-color: #FEE2E2;
+            background-color: #fee2e2;
             color: var(--danger);
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .complete-msg {
-            display: none;
-            background-color: #D1FAE5;
-            color: #065F46;
-            padding: 15px;
+            padding: 6px 12px;
             border-radius: 6px;
-            text-align: center;
-            margin-bottom: 15px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            border: 1px solid #34D399;
+            font-size: 0.85rem;
+            width: auto;
         }
 
-        @media (max-width: 480px) {
-            .input-group {
-                flex-direction: column;
-            }
+        .complete-msg {
+            display: none;
+            background: linear-gradient(to right, #ecfdf5, #d1fae5);
+            color: #065f46;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid #a7f3d0;
+        }
+
+        /* PDF Specific Styles */
+        .pdf-only { display: none; }
+        
+        .pdf-header {
+            text-align: center;
+            border-bottom: 3px double #1f2937;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .pdf-header h1 { font-size: 2rem; color: #111827; margin-bottom: 10px; }
+        .pdf-header p { margin: 4px 0; font-size: 1.1rem; color: #374151; }
+        
+        .pdf-footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 20px;
+        }
+
+        /* Signature Section Styles */
+        .signature-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 200px;
+        }
+        
+        .signature-image {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: -15px; 
+            mix-blend-mode: multiply;
+        }
+
+        .signature-line {
+            border-top: 1px solid #111827;
+            width: 100%;
+            text-align: center;
+            padding-top: 5px;
+            font-weight: 600;
+        }
+
+        /* Print Media Query */
+        @media print {
+            body { background: #ffffff; padding: 0; }
+            .container { box-shadow: none; border-radius: 0; max-width: 100%; padding: 0; }
+            .no-print { display: none !important; }
+            .pdf-only { display: block !important; }
+            .pdf-footer { display: flex !important; page-break-inside: avoid; }
+            
+            table { border: 1px solid #000; }
+            th, td { border: 1px solid #000; padding: 10px; color: #000; }
+            th { background-color: #f3f4f6 !important; -webkit-print-color-adjust: exact; }
+            
+            @page { margin: 15mm; size: A4 portrait; }
+        }
+
+        @media (max-width: 600px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .container { padding: 20px; }
+            th, td { padding: 10px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="container" id="printableArea">
-        <header>
+        
+        <!-- PDF/Print এ দেখানোর জন্য স্পেশাল হেডার -->
+        <div class="pdf-only pdf-header">
+            <h1>মাসিক টিউশন রিপোর্ট</h1>
+            <p style="font-weight: 700; font-size: 1.3rem;">সাইফুল ইসলাম</p>
+            <p>সহঃশিক্ষক, ইবনে তাইমিয়া স্কুল এন্ড কলেজ</p>
+            <p>টিউশন: নোয়াগ্রাম (মিথিলা + ইলমা)</p>
+            <p id="pdfGenerateDate" style="color: #6b7280; font-size: 0.9rem; margin-top: 10px;"></p>
+        </div>
+
+        <header class="no-print">
             <h1>শিক্ষক: সাইফুল ইসলাম</h1>
             <h2>টিউশন: নোয়াগ্রাম (মিথিলা + ইলমা)</h2>
+            <div class="badge">সর্বোচ্চ ১৬টি ক্লাস</div>
         </header>
 
-        <div id="completeMsg" class="complete-msg">
-            🎉 অভিনন্দন! এই মাসের ১৬টি ক্লাস সম্পন্ন হয়েছে।
+        <div id="completeMsg" class="complete-msg no-print">
+            🎉 অভিনন্দন! এই মাসের ১৬টি ক্লাস সফলভাবে সম্পন্ন হয়েছে।
         </div>
 
-        <div class="dashboard">
-            <div class="stat-box">
+        <div class="dashboard no-print">
+            <div class="stat-box completed">
                 <div class="stat-value" id="completedClasses">০</div>
-                <div>সম্পন্ন ক্লাস</div>
+                <div style="font-weight: 600; color: #374151;">সম্পন্ন ক্লাস</div>
             </div>
-            <div class="stat-box">
+            <div class="stat-box remaining">
                 <div class="stat-value" id="remainingClasses">১৬</div>
-                <div>বাকি আছে</div>
+                <div style="font-weight: 600; color: #374151;">বাকি আছে</div>
             </div>
         </div>
 
-        <div class="progress-container">
-            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 5px;">
-                <span>প্রগ্রেস</span>
+        <div class="progress-container no-print">
+            <div style="display: flex; justify-content: space-between; font-weight: 600; color: #4b5563; margin-bottom: 8px;">
+                <span>মাসিক প্রগ্রেস</span>
                 <span id="progressText">০%</span>
             </div>
             <div class="progress-bar">
@@ -228,28 +367,60 @@
         </div>
 
         <div class="input-group no-print">
-            <input type="date" id="classDate">
-            <button class="btn-primary" onclick="addClass()">+ আজকের ক্লাস যুক্ত করুন</button>
+            <input type="date" id="classDate" title="তারিখ নির্বাচন করুন">
+            <input type="time" id="classTime" title="সময় নির্বাচন করুন">
+            
+            <!-- ড্রপডাউন সিলেক্ট বক্স -->
+            <select id="classTopic" title="পঠিত বিষয় নির্বাচন করুন">
+                <option value="পদার্থ">পদার্থ</option>
+                <option value="রসায়ন">রসায়ন</option>
+                <option value="সা. গণিত">সা. গণিত</option>
+                <option value="উ: গণিত">উ: গণিত</option>
+            </select>
+
+            <button class="btn-primary" onclick="addClass()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                ক্লাস যুক্ত করুন
+            </button>
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th>ক্লাস নং</th>
-                    <th>তারিখ</th>
-                    <th>বার</th>
-                    <th class="action-cell">অ্যাকশন</th>
+                    <th width="10%">নং</th>
+                    <th width="30%">তারিখ ও সময়</th>
+                    <th width="20%">বার</th>
+                    <th width="25%">পঠিত বিষয়</th>
+                    <th width="15%" class="action-cell no-print">অ্যাকশন</th>
                 </tr>
             </thead>
             <tbody id="classTableBody">
-                <!-- Data will be populated here -->
             </tbody>
         </table>
 
-        <!-- পিডিএফ ডাউনলোড বাটন -->
-        <button id="downloadPdfBtn" class="btn-success no-print" onclick="downloadPDF()">📥 মাসিক রিপোর্ট পিডিএফ আকারে ডাউনলোড করুন</button>
+        <!-- PDF/Print এ দেখানোর জন্য ফুটার -->
+        <div class="pdf-only pdf-footer">
+            <div style="font-size: 1rem; color: #000;">
+                সর্বমোট ক্লাস সম্পন্ন: <strong id="pdfTotalCount" style="font-size: 1.2rem;">০</strong> টি
+            </div>
+            <div class="signature-container">
+                <img src="https://lh3.googleusercontent.com/d/12Wd7B7cb3796z4OOreou9XsEwfv4p-WM" alt="Signature" class="signature-image">
+                <div class="signature-line">
+                    শিক্ষকের স্বাক্ষর
+                </div>
+            </div>
+        </div>
+
+        <!-- বাটনসমূহ -->
+        <button id="downloadPdfBtn" class="btn-success no-print" onclick="downloadPDF()" style="display: none;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            মাসিক রিপোর্ট PDF ডাউনলোড করুন
+        </button>
         
-        <button class="btn-danger no-print" onclick="resetMonth()">🔄 নতুন মাস শুরু করুন (রিসেট)</button>
+        <button class="btn-danger-outline no-print" onclick="resetMonth()">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            নতুন মাস শুরু করুন (রিসেট)
+        </button>
     </div>
 
     <script>
@@ -261,7 +432,9 @@
         const daysInBengali = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
         const monthsInBengali = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
 
-        document.getElementById('classDate').valueAsDate = new Date();
+        const now = new Date();
+        document.getElementById('classDate').valueAsDate = now;
+        document.getElementById('classTime').value = now.toTimeString().slice(0, 5);
 
         let classData = JSON.parse(localStorage.getItem(storageKey)) || [];
 
@@ -273,6 +446,14 @@
             return `${day} ${month}, ${year}`;
         }
 
+        function formatTimeInBengali(timeString) {
+            if(!timeString) return '';
+            let [hours, minutes] = timeString.split(':');
+            let ampm = hours >= 12 ? 'পিএম' : 'এএম';
+            hours = hours % 12 || 12; 
+            return `${engToBng(hours)}:${engToBng(minutes)} ${ampm}`;
+        }
+
         function getDayInBengali(dateString) {
             const date = new Date(dateString);
             return daysInBengali[date.getDay()];
@@ -282,13 +463,18 @@
             const tbody = document.getElementById('classTableBody');
             tbody.innerHTML = '';
 
+            classData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
             classData.forEach((item, index) => {
                 const tr = document.createElement('tr');
+                const formattedTime = item.time ? `<br><small style="color:#6b7280;">${formatTimeInBengali(item.time)}</small>` : '';
+                
                 tr.innerHTML = `
                     <td><strong>${engToBng(index + 1)}</strong></td>
-                    <td>${formatDateInBengali(item.date)}</td>
+                    <td>${formatDateInBengali(item.date)} ${formattedTime}</td>
                     <td>${getDayInBengali(item.date)}</td>
-                    <td class="action-cell"><button class="delete-btn" onclick="removeClass(${index})">মুছুন</button></td>
+                    <td style="font-weight: 500;">${item.topic || '-'}</td>
+                    <td class="action-cell no-print"><button class="delete-btn" onclick="removeClass(${index})">মুছুন</button></td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -298,6 +484,7 @@
             
             document.getElementById('completedClasses').innerText = engToBng(completed);
             document.getElementById('remainingClasses').innerText = engToBng(remaining);
+            document.getElementById('pdfTotalCount').innerText = engToBng(completed);
 
             const progressPercent = Math.min((completed / MAX_CLASSES) * 100, 100);
             document.getElementById('progressFill').style.width = `${progressPercent}%`;
@@ -310,47 +497,50 @@
             }
 
             if(completed > 0) {
-                document.getElementById('downloadPdfBtn').style.display = 'block';
+                document.getElementById('downloadPdfBtn').style.display = 'flex';
             } else {
                 document.getElementById('downloadPdfBtn').style.display = 'none';
             }
         }
 
         function addClass() {
-            // ১. ১৬ ক্লাসের লিমিট চেক
             if (classData.length >= MAX_CLASSES) {
                 alert("এই মাসের ১৬টি ক্লাস ইতিমধ্যে পূর্ণ হয়ে গেছে!");
                 return;
             }
 
             const dateInput = document.getElementById('classDate').value;
+            const timeInput = document.getElementById('classTime').value;
+            const topicInput = document.getElementById('classTopic').value;
+
             if (!dateInput) {
                 alert("দয়া করে একটি তারিখ নির্বাচন করুন!");
                 return;
             }
 
-            // ২. একই দিনের এন্ট্রি চেক (নতুন ফিচার)
             const exists = classData.some(c => c.date === dateInput);
             if(exists) {
-                alert("এক দিনে একটার বেশি ক্লাস যুক্ত করা যাবে না! আপনি ইতিমধ্যে এই তারিখে একটি ক্লাস যুক্ত করেছেন।");
+                alert("এক দিনে একটার বেশি ক্লাস যুক্ত করা যাবে ঠিকই, তবে একই তারিখ একাধিকবার দেওয়া যাবে না।");
                 return;
             }
 
-            // ৩. পাসওয়ার্ড চেক (নতুন ফিচার)
             const password = prompt("ক্লাস যুক্ত করতে পাসওয়ার্ড দিন:");
             if (password !== "Saiful007") {
                 alert("পাসওয়ার্ড ভুল হয়েছে! ক্লাস যুক্ত করা সম্ভব নয়।");
                 return;
             }
 
-            // সবকিছু ঠিক থাকলে ক্লাস যুক্ত হবে
-            classData.push({ date: dateInput });
+            classData.push({ 
+                date: dateInput,
+                time: timeInput,
+                topic: topicInput
+            });
+            
             saveData();
             updateUI();
         }
 
         function removeClass(index) {
-            // ডিলিট করার সময়ও চাইলে পাসওয়ার্ড দিতে পারেন, তবে আমি শুধুমাত্র কনফার্মেশন রেখেছি
             if(confirm("আপনি কি নিশ্চিত যে এই ক্লাসটি মুছে ফেলতে চান?")) {
                 classData.splice(index, 1);
                 saveData();
@@ -359,10 +549,26 @@
         }
 
         function resetMonth() {
-            if(confirm("আপনি কি নিশ্চিত? এটি পূর্ববর্তী সব ক্লাসের রেকর্ড মুছে ফেলবে। পিডিএফ ডাউনলোড করে থাকলে তবেই রিসেট করুন।")) {
+            // প্রথম পাসওয়ার্ড যাচাই
+            const firstPass = prompt("ডাটা রিসেট করতে প্রথমবার পাসওয়ার্ড দিন:");
+            if (firstPass !== "Saiful007") {
+                alert("পাসওয়ার্ড ভুল হয়েছে! রিসেট বাতিল করা হলো।");
+                return;
+            }
+
+            // দ্বিতীয় পাসওয়ার্ড যাচাই
+            const secondPass = prompt("নিশ্চিত করতে পুনরায় পাসওয়ার্ড দিন:");
+            if (secondPass !== "Saiful007") {
+                alert("পাসওয়ার্ড ভুল হয়েছে! রিসেট বাতিল করা হলো।");
+                return;
+            }
+
+            // চূড়ান্ত নিশ্চিতকরণ
+            if(confirm("সতর্কতা: আপনি কি নিশ্চিত? পূর্ববর্তী সব ক্লাসের রেকর্ড চিরতরে মুছে যাবে। পিডিএফ ডাউনলোড করে থাকলে তবেই রিসেট করুন।")) {
                 classData = [];
                 saveData();
                 updateUI();
+                alert("সফলভাবে নতুন মাস শুরু হয়েছে!");
             }
         }
 
@@ -371,27 +577,10 @@
         }
 
         function downloadPDF() {
-            const element = document.getElementById('printableArea');
+            const today = formatDateInBengali(new Date().toISOString().split('T')[0]);
+            document.getElementById('pdfGenerateDate').innerText = `রিপোর্ট জেনারেট তারিখ: ${today}`;
             
-            const noPrintElements = document.querySelectorAll('.no-print');
-            const actionCells = document.querySelectorAll('.action-cell');
-            
-            noPrintElements.forEach(el => el.style.display = 'none');
-            actionCells.forEach(el => el.style.display = 'none');
-
-            const opt = {
-                margin:       [0.5, 0.5, 0.5, 0.5],
-                filename:     'Tuition_Report_Saiful_Islam.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(element).save().then(() => {
-                noPrintElements.forEach(el => el.style.display = '');
-                actionCells.forEach(el => el.style.display = '');
-                updateUI(); 
-            });
+            window.print();
         }
 
         updateUI();
