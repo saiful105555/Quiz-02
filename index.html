@@ -87,11 +87,19 @@
   <div class="filter-grid">
     <div class="field">
       <label>শ্রেণি (Class)</label>
-      <input type="text" id="tClass" value="Eight">
+      <select id="tClass">
+        <option value="Six">Six</option>
+        <option value="Seven">Seven</option>
+        <option value="Eight" selected>Eight</option>
+      </select>
     </div>
     <div class="field">
       <label>শাখা (Section)</label>
-      <input type="text" id="tSection" value="A">
+      <select id="tSection">
+        <option value="A" selected>A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
     </div>
     <div class="field">
       <label>শিফট (Shift)</label>
@@ -101,7 +109,7 @@
       <label>সাল (Year)</label>
       <input type="text" id="tYear" value="2026">
     </div>
-    <div class="field" style="grid-column: span 2;">
+    <div class="field" style="grid-column: 1 / -1;">
       <label>আপনার বিষয় নির্বাচন করুন</label>
       <select id="tSubject">
         <option value="b1">বাংলা-১ (পূর্ণমান ১০০)</option>
@@ -120,10 +128,6 @@
         <option value="moral">Moral Activities (পূর্ণমান ৫০)</option>
         <option value="drill">ড্রীল (পূর্ণমান ২৫)</option>
       </select>
-    </div>
-    <div class="field">
-      <label>সিকিউরিটি পিন (PIN)</label>
-      <input type="password" id="tPin" placeholder="যেমন: 1105">
     </div>
   </div>
 
@@ -158,6 +162,7 @@
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby9KSjyhSkoLNVwKWfp6aT2J06QPX08Fp-OQJqFC7Utm9jgmdC3IlDLgJN6FDi7b0v6hw/exec";
+  const AUTO_PIN = "9999";
 
   const subjectMaxMap = {
     b1: 100, b2: 50, e1: 100, e2: 100, math: 100, rel: 100, arab: 100,
@@ -198,9 +203,6 @@
     const shift = document.getElementById('tShift').value.trim();
     const year = document.getElementById('tYear').value.trim();
     const subject = document.getElementById('tSubject').value;
-    const pin = document.getElementById('tPin').value.trim();
-
-    if (!pin) return showStatus('দয়া করে আপনার বিষয়ের সিকিউরিটি পিন দিন।', true);
 
     const btn = document.getElementById('loadBtn');
     btn.disabled = true;
@@ -208,7 +210,7 @@
     document.getElementById('marksSection').style.display = 'none';
 
     try {
-      const url = `${SCRIPT_URL}?action=getSubject&cls=${encodeURIComponent(cls)}&sec=${encodeURIComponent(sec)}&shift=${encodeURIComponent(shift)}&year=${encodeURIComponent(year)}&subject=${encodeURIComponent(subject)}&pin=${encodeURIComponent(pin)}`;
+      const url = `${SCRIPT_URL}?action=getSubject&cls=${encodeURIComponent(cls)}&sec=${encodeURIComponent(sec)}&shift=${encodeURIComponent(shift)}&year=${encodeURIComponent(year)}&subject=${encodeURIComponent(subject)}&pin=${AUTO_PIN}`;
       const res = await fetch(url);
       const data = await res.json();
 
@@ -251,7 +253,6 @@
     const shift = document.getElementById('tShift').value.trim();
     const year = document.getElementById('tYear').value.trim();
     const subject = document.getElementById('tSubject').value;
-    const pin = document.getElementById('tPin').value.trim();
 
     const rows = document.querySelectorAll('#marksBody tr');
     const marks = [];
@@ -273,7 +274,7 @@
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
           action: 'saveSubjectMarks',
-          cls, sec, shift, year, subject, pin, marks
+          cls, sec, shift, year, subject, pin: AUTO_PIN, marks
         })
       });
       const data = await res.json();
